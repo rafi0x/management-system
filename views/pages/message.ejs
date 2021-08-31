@@ -1,0 +1,204 @@
+<%- include('../parsials/message/header.ejs') %>
+
+
+  <!-- ::side nav:: -->
+<%-include('../parsials/nav.ejs')%>
+<dev id="main">
+<%- include('../parsials/navBar.ejs')%>
+  <!-- begin::main content -->
+  <main class="main-content">
+    <!-- begin::chat block -->
+    <div class="row no-gutters chat-block">
+      <!-- begin::chat sidebar -->
+      <div class="col-lg-4 chat-sidebar border-right">
+        <!-- begin::chat sidebar search -->
+        <div>
+          
+          <form id="contactSearchForm">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control search-input"
+                placeholder="Search contacts"
+                aria-describedby="button-addon1"
+              />
+              
+            </div>
+          </form>
+        </div>
+
+        <!-- end::chat list -->
+        <div class="chat-sidebar-content">
+          <div class="tab-content pt-3" id="pills-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="pills-home"
+              role="tabpanel"
+              aria-labelledby="pills-home-tab"
+            >
+              <p id='title-chat-list' class="small mb-0"></p>
+              <div class="chat-lists">
+                <div id="chat-list" class="list-group list-group-flush">
+                  <% for( info of data ) { %>
+                    <% if (info.creator.id.toString() === profile._id.toString()) { %>
+                      <a href="#" class=" list-group-item d-flex align-items-center link-1 pl-0 pr-0 pb-3 pt-3" onclick="getMessages('<%= info._id %>','<%= info.participant.name%>','<%= info.participant.avatar %>','<%= info.participant.id %>')">
+                    <div class="pr-3">
+                      <div class="avatar avatar-sm m-r-15 avatar-state-success">
+                          <img src="<%= info.participant.avatar ? `/uploads/avatars/${info.participant.avatar}` : `/assets2/img/160x160/img1.jpg`; %>" class="rounded-circle" alt="user">
+                      </div>
+                    </div>
+                    <div>
+                      <h6 class="mb-1"><%= `${info.participant.name}` %></h6>
+                      <span class="small text-muted">last seen at: 2:32 PM</span>
+                    </div>
+                    <!-- <div class="text-right ml-auto">
+                      <span class="badge badge-primary badge-pill ml-auto"
+                        >1</span
+                      >
+                    </div> -->
+                  </a>
+                    <% } else { %>
+                     <a href="#" class=" list-group-item d-flex align-items-center link-1 pl-0 pr-0 pb-3 pt-3" onclick="getMessages('<%= info._id %>','<%= info.creator.name %>','<%= info.creator.avatar %>','<%= info.creator.id %>')">
+                    <div class="pr-3">
+                      <div class="avatar avatar-sm m-r-15 avatar-state-success">
+                          <img src="<%= info.creator.avatar ? `/uploads/avatars/${info.creator.avatar}` : `/assets2/img/160x160/img1.jpg`; %>" class="rounded-circle" alt="user">
+                      </div>
+                    </div>
+                    <div>
+                      <h6 class="mb-1"><%= `${info.creator.name}` %></h6>
+                      <span class="small text-muted">last seen at: 2:32 PM</span>
+                    </div>
+                    <!-- <div class="text-right ml-auto">
+                      <span class="badge badge-primary badge-pill ml-auto"
+                        >1</span
+                      >
+                    </div> -->
+                  </a>
+                  <% } %>
+                  <% } %>
+
+                </div>
+
+                <!-- for search result -->
+                <div id="search-result-show" class="list-group list-group-flush d-none">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end::chat list -->
+      </div>
+      <!-- end::chat sidebar -->
+
+      <!-- blank message box -->
+      <div id="blank-message-box" class="col-lg-8 chat-content"><h3 class="text-center m-auto text-muted">select contact to start messaging</h3></div>
+
+      <!-- begin::chat content -->
+      <div id="message-box" class="col-lg-8 chat-content d-none">
+        <!-- begin::chat header -->
+        <div class="chat-header border-bottom">
+          <div class="d-flex align-items-center">
+            <div class="pr-3">
+              <div class="avatar avatar-sm avatar-state-warning">
+                <img
+                  id="currentConversationAvatar"
+                  class="rounded-circle"
+                  alt="image"
+                />
+              </div>
+            </div>
+            <div>
+              <h6 id="currentConversationName" class="mb-1"> </h6>
+              <div class="m-0 small text-success">typing...</div>
+            </div>
+            <div class="ml-auto">
+              <ul class="nav align-items-center">
+                <li class="mr-4 d-sm-inline d-none">
+                  <a href="#" title="Start Video Call" data-toggle="tooltip">
+                    <i data-feather="video" class="width-18 height-18"></i>
+                  </a>
+                </li>
+                <li class="mr-4 d-sm-inline d-none">
+                  <a href="#" title="Start Voice Call" data-toggle="tooltip">
+                    <i data-feather="phone-call" class="width-18 height-18"></i>
+                  </a>
+                </li>
+                <li class="d-sm-inline d-none">
+                  <a href="#" title="Add to Contact" data-toggle="tooltip">
+                    <i data-feather="user-plus" class="width-18 height-18"></i>
+                  </a>
+                </li>
+                <li class="ml-4 mobile-chat-close-btn">
+                  <a href="#" class="btn btn-sm btn-danger">
+                    <i data-feather="x" class="width-18 height-18"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- end::chat header -->
+
+        <!-- begin::messages -->
+        <div id="chat-body" class="messages">
+          
+        </div>
+        <!-- end::messages -->
+
+        <!-- begin::chat footer -->
+        <div class="chat-footer border-top">
+          <form class="d-flex" id="send-nessages" method="post" action="/tadmin/messages/new-message/" enctype="multipart/form-data">
+            <button
+              class="btn btn-outline-light mr-2"
+              type="button"
+              title="Emoji"
+              data-toggle="tooltip"
+            >
+              <i data-feather="smile" class="width-15 height-15"></i>
+            </button>
+            <div class="flex-grow-1">
+              <input
+                name="message"
+                type="text"
+                class="form-control"
+                placeholder="Write your message"
+              />
+            </div>
+            <div class="chat-footer-buttons d-flex">
+              <button class="btn btn-primary" type="submit">
+                <i data-feather="send" class="width-15 height-15"></i>
+              </button>
+              <lable
+                class="btn btn-outline-light"
+                for="attachment"
+                title="Attach files"
+                data-toggle="tooltip"
+              >
+                <i data-feather="paperclip" class="width-15 height-15"></i>
+                <input type="file" multiple name="attachment" class="" id="attachment" />
+            </lable>
+            </div>
+          </form>
+        </div>
+        <!-- end::chat footer -->
+      </div>
+      <!-- begin::chat content -->
+    </div>
+    <!-- begin::chat block -->
+  </main>
+  <!-- end::main content -->
+<!-- `<div class="message-item message-item-divider">
+            <span>Today</span>
+          </div>
+          ` -->
+      <script>
+  let loggedIn_user_id = "<%= profile._id %>"; 
+  let socket = io.connect('<%= process.env.DOMAIN %>');
+  
+  
+
+  </script>
+  <script src="/assets/js/message.js"></script>
+
+  <%- include('../parsials/message/footer.ejs') %>
+</dev>

@@ -1,0 +1,147 @@
+
+    <!-- begin::footer -->
+    <footer>
+        <div class="container-fluid">
+                <nav class="nav">
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <!-- end::footer -->
+<div class="modal fade" tabindex="-1" role="dialog" id="compose">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Compose Email</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="ti-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-between m-b-20">
+                    <div>
+                        <a href="#" data-toggle="tooltip" title=""
+                           class="btn btn-outline-light btn-sm mr-2"
+                           data-original-title="Keep">
+                            <i data-feather="save"></i>
+                        </a>
+                        <a href="#" data-toggle="tooltip" title=""
+                           class="btn btn-outline-light btn-sm mr-2"
+                           data-original-title="Delete">
+                            <i data-feather="trash-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control tagsinput" placeholder="To"
+                               value="example@test.com.tr" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" multiple id="customFileLangHTML">
+                            <label class="custom-file-label" for="customFileLangHTML" data-browse="Select files">Voeg je document toe</label>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="compose-quill-editor mb-3"></div>
+                        <div class="d-flex justify-content-between">
+                            <div class="compose-quill-toolbar">
+                            <span class="ql-formats mr-0">
+                                <button class="ql-bold"></button>
+                                <button class="ql-italic"></button>
+                                <button class="ql-underline"></button>
+                                <button class="ql-link"></button>
+                                <button class="ql-image"></button>
+                            </span>
+                            </div>
+                            <button class="btn btn-primary">
+                                <i data-feather="send" class="mr-2"></i>
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Plugin scripts -->
+<script src="<%= process.env.CDN %>vendors/bundle.js"></script>
+
+<!-- Tagsinput -->
+<script src="<%= process.env.CDN %>vendors/tagsinput/bootstrap-tagsinput.js"></script>
+<script src="<%= process.env.CDN %>assets/js/examples/tagsinput.js"></script>
+
+<!-- quill -->
+<script src="<%= process.env.CDN %>vendors/quill/quill.js"></script>
+
+<!-- App scripts -->
+<script src="<%= process.env.CDN %>assets/js/app.min.js"></script>
+
+<script>
+    new Quill('.compose-quill-editor', {
+        modules: {
+            toolbar: ".compose-quill-toolbar"
+        },
+        placeholder: "Type something... ",
+        theme: "snow"
+    });
+
+    new Quill('.reply-email-quill-editor', {
+        modules: {
+            toolbar: ".reply-email-quill-toolbar"
+        },
+        placeholder: "Type something... ",
+        theme: "snow"
+    });
+
+    $(function () {
+        $(document).on('click', '.app-block .app-content .app-action .action-left input[type="checkbox"]', function () {
+            $('.app-lists ul li input[type="checkbox"]').prop('checked', $(this).prop('checked'));
+            if ($(this).prop('checked')) {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').addClass('active');
+            } else {
+                $('.app-lists ul li input[type="checkbox"]').closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-lists ul li input[type="checkbox"]', function () {
+            if ($(this).prop('checked')) {
+                $(this).closest('li').addClass('active');
+            } else {
+                $(this).closest('li').removeClass('active');
+            }
+        });
+
+        $(document).on('click', '.app-block .app-content .app-content-body .app-lists ul.list-group li.list-group-item', function (e) {
+            if (!$(e.target).is('.custom-control, .custom-control *, a, a *')) {
+                $('.app-detail').addClass('show').one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function () {
+                    $('.app-block .app-content .app-content-body .app-detail .app-detail-article').niceScroll().resize();
+                });
+            }
+        });
+
+        $(document).on('click', 'a.app-detail-close-button', function () {
+            $('.app-detail').removeClass('show');
+            return false;
+        });
+
+        $(document).on('click', '.app-sidebar-menu-button', function () {
+            $('.app-block .app-sidebar, .app-content-overlay').addClass('show');
+            // $('.app-block .app-sidebar .app-sidebar-menu').niceScroll().resize();
+            return false;
+        });
+
+        $(document).on('click', '.app-content-overlay', function () {
+            $('.app-block .app-sidebar, .app-content-overlay').removeClass('show');
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

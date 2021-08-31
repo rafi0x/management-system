@@ -1,0 +1,1128 @@
+<%- include('../parsials/header.ejs') %> <%- include('../parsials/nav.ejs')%>
+<link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets2/css/vendor.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets2/vendor/icon-set/style.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+<body class="sticky-navigation shadow-layout light-header">
+  <dev id="main" class="main"> <%- include('../parsials/navBar.ejs')%>
+
+      <!-- Content -->
+      <div class="content container-fluid">
+
+        <div class="row justify-content-lg-center">
+          <div class="col-lg-10">
+              <div class="profile-cover mt-5">
+          <div class="profile-cover-img-wrapper">
+            <img
+              id="profileCoverImg"
+              class="profile-cover-img"
+              src="<%= process.env.CDN %>assets2/img/1920x400/img2.jpg"
+              alt="Image Description"
+            />
+            <!-- End Custom File Cover -->
+          </div>
+        </div>
+        <!-- End Profile Cover -->
+
+        <!-- Profile Header -->
+        
+        <!-- Card -->
+        <form action="/tadmin/settings" method="POST" class='aboutForm'>
+                 <div class="text-center mb-5">
+                    <!-- Avatar -->
+                      <label
+                      data-target="#modal" data-toggle="modal"
+                      class="
+                        avatar avatar-xxl avatar-circle avatar-border-lg avatar-uploader
+                        profile-cover-avatar
+                      "
+                      for="avatarUploader"
+                      style="width: 7.875rem;height: 7.875rem;"
+                    >
+                      <img
+                        id="avatarImg"
+                        class="avatar-img"
+                        src='<%= profile.avatar ? `${process.env.CDN}/uploads/avatars/${profile.avatar}` : `${process.env.CDN}/assets2/img/160x160/img1.jpg` %>'
+                        alt="Image Description"
+                      />
+                      <input
+                      
+                            type="file"
+                            class="js-file-attach avatar-uploader-input"
+                            id="avatarUploader"
+                            data-hs-file-attach-options='{
+                                      "textTarget": "#imageModal",
+                                      "mode": "image",
+                                      "targetAttr": "src",
+                                      "resetTarget": ".js-file-attach-reset-img",
+                                      "resetImg": "<%= process.env.CDN %>/assets2/img/160x160/img1.jpg"
+                                      "allowTypes": [".png", ".jpeg", ".jpg"]
+                                   }'
+                          />
+
+                      <span class="avatar-uploader-trigger">
+                        <i class="tio-edit avatar-uploader-icon shadow-soft"></i>
+                      </span>
+                    </label>
+                    <!-- </form> -->
+                    <!-- End Avatar -->
+                    
+                    <h1 class="page-header-title"> <%= profile.name ? `${profile.name.firstname} ${profile.name.lastname}` : 'Profile incomplete' %> </h1>
+
+                    <!-- List -->
+                    <ul class="list-inline list-inline-m-1">
+                      <li class="list-inline-item">
+                        <i class="tio-poi-outlined mr-1"></i>
+                        <a href="#"><%= profile.address ? profile.address.city : '' %>,</a>
+                        <a href="#"><%= profile.address ? profile.address.country : '' %></a>
+                      </li>
+
+                      <li class="list-inline-item">
+                        <i class="tio-date-range mr-1"></i>
+                        <span>Joined <%= profile.createTime ? profile.createTime.toDateString() : ''%></span>
+                      </li>
+                    </ul>
+                    <!-- End List -->
+                  </div>
+
+
+            <div class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h2 class="card-title h4">Basic information</h2>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <!-- Form -->
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="firstNameLabel" class="col-sm-3 col-form-label input-label">Full name </label>
+
+                    <div class="col-sm-9">
+                      <div class="input-group input-group-sm-down-break">
+                        <input type="text" class="form-control" name="firstname" id="firstNameLabel" placeholder="Your first name" aria-label="Your first name">
+                        <input type="text" class="form-control" name="lastname" id="lastNameLabel" placeholder="Your last name" aria-label="Your last name">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="phoneLabel" class="col-sm-3 col-form-label input-label">Phone</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="js-masked-input form-control" name="phone" id="phoneLabel" placeholder="+x(xxx)xxx-xx-xx" >
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="locationLabel" class="col-sm-3 col-form-label input-label">Location</label>
+
+                    <div class="col-sm-9">
+                      <!-- Select -->
+                      <div class="mb-3">
+                          <select
+                            class="js-select2-custom custom-select"
+                            size="1"
+                            name="country"
+                            id="locationLabel"
+                            data-hs-select2-options='{
+                                    "placeholder": "Select country",
+                                    "searchInputPlaceholder": "Search a country"
+                                  }'
+                          >
+                             <option value="">select country</option>
+                             <option value="Afganistan">Afghanistan</option>
+                              <option value="Albania">Albania</option>
+                              <option value="Algeria">Algeria</option>
+                              <option value="American Samoa">American Samoa</option>
+                              <option value="Andorra">Andorra</option>
+                              <option value="Angola">Angola</option>
+                              <option value="Anguilla">Anguilla</option>
+                              <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                              <option value="Argentina">Argentina</option>
+                              <option value="Armenia">Armenia</option>
+                              <option value="Aruba">Aruba</option>
+                              <option value="Australia">Australia</option>
+                              <option value="Austria">Austria</option>
+                              <option value="Azerbaijan">Azerbaijan</option>
+                              <option value="Bahamas">Bahamas</option>
+                              <option value="Bahrain">Bahrain</option>
+                              <option value="Bangladesh">Bangladesh</option>
+                              <option value="Barbados">Barbados</option>
+                              <option value="Belarus">Belarus</option>
+                              <option value="Belgium">Belgium</option>
+                              <option value="Belize">Belize</option>
+                              <option value="Benin">Benin</option>
+                              <option value="Bermuda">Bermuda</option>
+                              <option value="Bhutan">Bhutan</option>
+                              <option value="Bolivia">Bolivia</option>
+                              <option value="Bonaire">Bonaire</option>
+                              <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                              <option value="Botswana">Botswana</option>
+                              <option value="Brazil">Brazil</option>
+                              <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                              <option value="Brunei">Brunei</option>
+                              <option value="Bulgaria">Bulgaria</option>
+                              <option value="Burkina Faso">Burkina Faso</option>
+                              <option value="Burundi">Burundi</option>
+                              <option value="Cambodia">Cambodia</option>
+                              <option value="Cameroon">Cameroon</option>
+                              <option value="Canada">Canada</option>
+                              <option value="Canary Islands">Canary Islands</option>
+                              <option value="Cape Verde">Cape Verde</option>
+                              <option value="Cayman Islands">Cayman Islands</option>
+                              <option value="Central African Republic">Central African Republic</option>
+                              <option value="Chad">Chad</option>
+                              <option value="Channel Islands">Channel Islands</option>
+                              <option value="Chile">Chile</option>
+                              <option value="China">China</option>
+                              <option value="Christmas Island">Christmas Island</option>
+                              <option value="Cocos Island">Cocos Island</option>
+                              <option value="Colombia">Colombia</option>
+                              <option value="Comoros">Comoros</option>
+                              <option value="Congo">Congo</option>
+                              <option value="Cook Islands">Cook Islands</option>
+                              <option value="Costa Rica">Costa Rica</option>
+                              <option value="Cote DIvoire">Cote DIvoire</option>
+                              <option value="Croatia">Croatia</option>
+                              <option value="Cuba">Cuba</option>
+                              <option value="Curaco">Curacao</option>
+                              <option value="Cyprus">Cyprus</option>
+                              <option value="Czech Republic">Czech Republic</option>
+                              <option value="Denmark">Denmark</option>
+                              <option value="Djibouti">Djibouti</option>
+                              <option value="Dominica">Dominica</option>
+                              <option value="Dominican Republic">Dominican Republic</option>
+                              <option value="East Timor">East Timor</option>
+                              <option value="Ecuador">Ecuador</option>
+                              <option value="Egypt">Egypt</option>
+                              <option value="El Salvador">El Salvador</option>
+                              <option value="Equatorial Guinea">Equatorial Guinea</option>
+                              <option value="Eritrea">Eritrea</option>
+                              <option value="Estonia">Estonia</option>
+                              <option value="Ethiopia">Ethiopia</option>
+                              <option value="Falkland Islands">Falkland Islands</option>
+                              <option value="Faroe Islands">Faroe Islands</option>
+                              <option value="Fiji">Fiji</option>
+                              <option value="Finland">Finland</option>
+                              <option value="France">France</option>
+                              <option value="French Guiana">French Guiana</option>
+                              <option value="French Polynesia">French Polynesia</option>
+                              <option value="French Southern Ter">French Southern Ter</option>
+                              <option value="Gabon">Gabon</option>
+                              <option value="Gambia">Gambia</option>
+                              <option value="Georgia">Georgia</option>
+                              <option value="Germany">Germany</option>
+                              <option value="Ghana">Ghana</option>
+                              <option value="Gibraltar">Gibraltar</option>
+                              <option value="Great Britain">Great Britain</option>
+                              <option value="Greece">Greece</option>
+                              <option value="Greenland">Greenland</option>
+                              <option value="Grenada">Grenada</option>
+                              <option value="Guadeloupe">Guadeloupe</option>
+                              <option value="Guam">Guam</option>
+                              <option value="Guatemala">Guatemala</option>
+                              <option value="Guinea">Guinea</option>
+                              <option value="Guyana">Guyana</option>
+                              <option value="Haiti">Haiti</option>
+                              <option value="Hawaii">Hawaii</option>
+                              <option value="Honduras">Honduras</option>
+                              <option value="Hong Kong">Hong Kong</option>
+                              <option value="Hungary">Hungary</option>
+                              <option value="Iceland">Iceland</option>
+                              <option value="Indonesia">Indonesia</option>
+                              <option value="India">India</option>
+                              <option value="Iran">Iran</option>
+                              <option value="Iraq">Iraq</option>
+                              <option value="Ireland">Ireland</option>
+                              <option value="Isle of Man">Isle of Man</option>
+                              <option value="Israel">Israel</option>
+                              <option value="Italy">Italy</option>
+                              <option value="Jamaica">Jamaica</option>
+                              <option value="Japan">Japan</option>
+                              <option value="Jordan">Jordan</option>
+                              <option value="Kazakhstan">Kazakhstan</option>
+                              <option value="Kenya">Kenya</option>
+                              <option value="Kiribati">Kiribati</option>
+                              <option value="Korea North">Korea North</option>
+                              <option value="Korea Sout">Korea South</option>
+                              <option value="Kuwait">Kuwait</option>
+                              <option value="Kyrgyzstan">Kyrgyzstan</option>
+                              <option value="Laos">Laos</option>
+                              <option value="Latvia">Latvia</option>
+                              <option value="Lebanon">Lebanon</option>
+                              <option value="Lesotho">Lesotho</option>
+                              <option value="Liberia">Liberia</option>
+                              <option value="Libya">Libya</option>
+                              <option value="Liechtenstein">Liechtenstein</option>
+                              <option value="Lithuania">Lithuania</option>
+                              <option value="Luxembourg">Luxembourg</option>
+                              <option value="Macau">Macau</option>
+                              <option value="Macedonia">Macedonia</option>
+                              <option value="Madagascar">Madagascar</option>
+                              <option value="Malaysia">Malaysia</option>
+                              <option value="Malawi">Malawi</option>
+                              <option value="Maldives">Maldives</option>
+                              <option value="Mali">Mali</option>
+                              <option value="Malta">Malta</option>
+                              <option value="Marshall Islands">Marshall Islands</option>
+                              <option value="Martinique">Martinique</option>
+                              <option value="Mauritania">Mauritania</option>
+                              <option value="Mauritius">Mauritius</option>
+                              <option value="Mayotte">Mayotte</option>
+                              <option value="Mexico">Mexico</option>
+                              <option value="Midway Islands">Midway Islands</option>
+                              <option value="Moldova">Moldova</option>
+                              <option value="Monaco">Monaco</option>
+                              <option value="Mongolia">Mongolia</option>
+                              <option value="Montserrat">Montserrat</option>
+                              <option value="Morocco">Morocco</option>
+                              <option value="Mozambique">Mozambique</option>
+                              <option value="Myanmar">Myanmar</option>
+                              <option value="Nambia">Nambia</option>
+                              <option value="Nauru">Nauru</option>
+                              <option value="Nepal">Nepal</option>
+                              <option value="Netherland Antilles">Netherland Antilles</option>
+                              <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                              <option value="Nevis">Nevis</option>
+                              <option value="New Caledonia">New Caledonia</option>
+                              <option value="New Zealand">New Zealand</option>
+                              <option value="Nicaragua">Nicaragua</option>
+                              <option value="Niger">Niger</option>
+                              <option value="Nigeria">Nigeria</option>
+                              <option value="Niue">Niue</option>
+                              <option value="Norfolk Island">Norfolk Island</option>
+                              <option value="Norway">Norway</option>
+                              <option value="Oman">Oman</option>
+                              <option value="Pakistan">Pakistan</option>
+                              <option value="Palau Island">Palau Island</option>
+                              <option value="Palestine">Palestine</option>
+                              <option value="Panama">Panama</option>
+                              <option value="Papua New Guinea">Papua New Guinea</option>
+                              <option value="Paraguay">Paraguay</option>
+                              <option value="Peru">Peru</option>
+                              <option value="Phillipines">Philippines</option>
+                              <option value="Pitcairn Island">Pitcairn Island</option>
+                              <option value="Poland">Poland</option>
+                              <option value="Portugal">Portugal</option>
+                              <option value="Puerto Rico">Puerto Rico</option>
+                              <option value="Qatar">Qatar</option>
+                              <option value="Republic of Montenegro">Republic of Montenegro</option>
+                              <option value="Republic of Serbia">Republic of Serbia</option>
+                              <option value="Reunion">Reunion</option>
+                              <option value="Romania">Romania</option>
+                              <option value="Russia">Russia</option>
+                              <option value="Rwanda">Rwanda</option>
+                              <option value="St Barthelemy">St Barthelemy</option>
+                              <option value="St Eustatius">St Eustatius</option>
+                              <option value="St Helena">St Helena</option>
+                              <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                              <option value="St Lucia">St Lucia</option>
+                              <option value="St Maarten">St Maarten</option>
+                              <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                              <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                              <option value="Saipan">Saipan</option>
+                              <option value="Samoa">Samoa</option>
+                              <option value="Samoa American">Samoa American</option>
+                              <option value="San Marino">San Marino</option>
+                              <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                              <option value="Saudi Arabia">Saudi Arabia</option>
+                              <option value="Senegal">Senegal</option>
+                              <option value="Seychelles">Seychelles</option>
+                              <option value="Sierra Leone">Sierra Leone</option>
+                              <option value="Singapore">Singapore</option>
+                              <option value="Slovakia">Slovakia</option>
+                              <option value="Slovenia">Slovenia</option>
+                              <option value="Solomon Islands">Solomon Islands</option>
+                              <option value="Somalia">Somalia</option>
+                              <option value="South Africa">South Africa</option>
+                              <option value="Spain">Spain</option>
+                              <option value="Sri Lanka">Sri Lanka</option>
+                              <option value="Sudan">Sudan</option>
+                              <option value="Suriname">Suriname</option>
+                              <option value="Swaziland">Swaziland</option>
+                              <option value="Sweden">Sweden</option>
+                              <option value="Switzerland">Switzerland</option>
+                              <option value="Syria">Syria</option>
+                              <option value="Tahiti">Tahiti</option>
+                              <option value="Taiwan">Taiwan</option>
+                              <option value="Tajikistan">Tajikistan</option>
+                              <option value="Tanzania">Tanzania</option>
+                              <option value="Thailand">Thailand</option>
+                              <option value="Togo">Togo</option>
+                              <option value="Tokelau">Tokelau</option>
+                              <option value="Tonga">Tonga</option>
+                              <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                              <option value="Tunisia">Tunisia</option>
+                              <option value="Turkey">Turkey</option>
+                              <option value="Turkmenistan">Turkmenistan</option>
+                              <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                              <option value="Tuvalu">Tuvalu</option>
+                              <option value="Uganda">Uganda</option>
+                              <option value="United Kingdom">United Kingdom</option>
+                              <option value="Ukraine">Ukraine</option>
+                              <option value="United Arab Erimates">United Arab Emirates</option>
+                              <option value="United States of America">United States of America</option>
+                              <option value="Uraguay">Uruguay</option>
+                              <option value="Uzbekistan">Uzbekistan</option>
+                              <option value="Vanuatu">Vanuatu</option>
+                              <option value="Vatican City State">Vatican City State</option>
+                              <option value="Venezuela">Venezuela</option>
+                              <option value="Vietnam">Vietnam</option>
+                              <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                              <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                              <option value="Wake Island">Wake Island</option>
+                              <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                              <option value="Yemen">Yemen</option>
+                              <option value="Zaire">Zaire</option>
+                              <option value="Zambia">Zambia</option>
+                              <option value="Zimbabwe">Zimbabwe</option>
+                          </select>
+                        </div>
+                      <!-- End Select -->
+
+                      <div class="mb-3">
+                        <input type="text" class="form-control" name="city" id="cityLabel" placeholder="City" aria-label="City" >
+                      </div>
+
+                      <input type="text" class="form-control" name="state" id="stateLabel" placeholder="State" aria-label="State" >
+                    </div>
+                    </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="addressLine1Label" class="col-sm-3 col-form-label input-label">Street Address</label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="street" id="addressLine1Label" placeholder="Your address" aria-label="Your address">
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="zipCodeLabel" class="col-sm-3 col-form-label input-label">Zip code <i class="tio-help-outlined text-body ml-1" data-toggle="tooltip" data-placement="top" title="You can find your code in a postal address."></i></label>
+
+                    <div class="col-sm-9">
+                      <input type="text" class="js-masked-input form-control" name="zipcode" id="zipCodeLabel" placeholder="Your zip code"
+                             >
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary aboutFormBtn">Save changes</button>
+                  </div>
+                  <!-- End Form -->
+                </div>
+                <!-- End Body -->
+              </div>
+            </form>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="emailSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h3 class="card-title h4">Email</h3>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p>Your current email address is <span class="font-weight-bold"><%= profile.userId.email %></span></p>
+                <!-- Form -->
+                <form action="/tadmin/settings" method="POST" class='emailForm'>
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="newEmailLabel" class="col-sm-3 col-form-label input-label">New email address</label>
+
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" name="newEmail" id="newEmailLabel" placeholder="Enter new email address" aria-label="Enter new email address">
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary emailFormBtn">Save changes</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="passwordSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h4 class="card-title">Change your password</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <!-- Form -->
+                <form id="changePasswordForm" action="/tadmin/settings" method="POST" class='newpassForm'>
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="currentPasswordLabel" class="col-sm-3 col-form-label input-label">Current password</label>
+
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" name="oldPassowrd" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="newPassword" class="col-sm-3 col-form-label input-label">New password</label>
+
+                    <div class="col-sm-9">
+                      <input type="password" class="js-pwstrength form-control" name="password" id="newPassword" placeholder="Enter new password" aria-label="Enter new password"
+                             data-hs-pwstrength-options='{
+                               "ui": {
+                                 "container": "#changePasswordForm",
+                                 "viewports": {
+                                   "progress": "#passwordStrengthProgress",
+                                   "verdict": "#passwordStrengthVerdict"
+                                 }
+                               }
+                             }'>
+
+                      <p id="passwordStrengthVerdict" class="form-text mb-2"></p>
+
+                      <div id="passwordStrengthProgress"></div>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label input-label">Confirm new password</label>
+
+                    <div class="col-sm-9">
+                      <div class="mb-3">
+                        <input type="password" class="form-control" name="repassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
+                      </div>
+
+                      <h5>Password requirements:</h5>
+
+                      <p class="font-size-sm mb-2">Ensure that these requirements are met:</p>
+
+                      <ul class="font-size-sm">
+                        <li>Minimum 8 characters long - the more, the better</li>
+                        <li>At least one lowercase character</li>
+                        <li>At least one uppercase character</li>
+                        <li>At least one number, symbol, or whitespace character</li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary newpassFormBtn">Save Changes</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+            
+            <!-- Card -->
+            <div id="twoStepVerificationSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <div class="d-flex align-items-center">
+                  <h4 class="card-title">Two-step verification</h4>
+                  <span class="badge badge-soft-danger ml-2">Disabled</span>
+                </div>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p class="card-text">Start by entering your password so that we know it's you. Then we'll walk you through two more simple steps.</p>
+
+                <form>
+                  <!-- Form Group -->
+                  <div class="row form-group">
+                    <label for="accountPasswordLabel" class="col-sm-3 col-form-label input-label">Account password</label>
+
+                    <div class="col-sm-9">
+                      <input type="password" class="form-control" name="currentPassword" id="accountPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
+                      <small class="form-text">This is the password you use to log in to your Front account.</small>
+                    </div>
+                  </div>
+                  <!-- End Form Group -->
+
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Set up</button>
+                  </div>
+                </form>
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="recentDevicesSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h4 class="card-title">Recent devices</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p class="card-text">View and manage devices where you're currently logged in.</p>
+              </div>
+              <!-- End Body -->
+
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="table table-thead-bordered table-nowrap table-align-middle card-table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Browser</th>
+                      <th>Device</th>
+                      <th>Location</th>
+                      <th>Most recent activity</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr>
+                      <td class="d-flex align-items-center">
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
+                      </td>
+                      <td><i class="tio-laptop tio-lg mr-2"></i> Dell XPS 15 <span class="badge badge-soft-success ml-1">Current</span></td>
+                      <td>London, UK</td>
+                      <td>Now</td>
+                    </tr>
+
+                    <tr>
+                      <td class="d-flex align-items-center">
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Android
+                      </td>
+                      <td><i class="tio-android-phone-vs tio-lg mr-2"></i> Google Pixel 3a</td>
+                      <td>London, UK</td>
+                      <td>15, August 2020 15:08</td>
+                    </tr>
+
+                    <tr>
+                      <td class="d-flex align-items-center">
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
+                      </td>
+                      <td><i class="tio-imac tio-lg mr-2"></i> Microsoft Studio 2</td>
+                      <td>London, UK</td>
+                      <td>12, August 2020 20:07</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End Table -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="connectedAccountsSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h4 class="card-title">Connected accounts</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p class="card-text">Integrated features from these accounts make it easier to collaborate with people you know on Front Dashboard.</p>
+
+                <!-- Form -->
+                <form>
+                  <div class="list-group list-group-lg list-group-flush list-group-no-gutters">
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <img class="avatar avatar-xs mt-1 mr-3" src="<%= process.env.CDN %>assets2/svg/brands/google.svg" alt="Image Description">
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h5 class="mb-0">Google</h5>
+                              <p class="font-size-sm mb-0">Calendar and contacts</p>
+                            </div>
+
+                            <div class="col-auto">
+                              <!-- Checkbox Switch -->
+                              <label class="toggle-switch" for="connectedAccounts1">
+                                <input id="connectedAccounts1" type="checkbox" class="toggle-switch-input">
+                                <span class="toggle-switch-label">
+                                  <span class="toggle-switch-indicator"></span>
+                                </span>
+                              </label>
+                              <!-- End Checkbox Switch -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <img class="avatar avatar-xs mt-1 mr-3" src="<%= process.env.CDN %>assets2/svg/brands/spec.svg" alt="Image Description">
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h5 class="mb-0">Spec</h5>
+                              <p class="font-size-sm mb-0">Project management</p>
+                            </div>
+
+                            <div class="col-auto">
+                              <!-- Checkbox Switch -->
+                              <label class="toggle-switch" for="connectedAccounts2">
+                                <input id="connectedAccounts2" type="checkbox" class="toggle-switch-input">
+                                <span class="toggle-switch-label">
+                                  <span class="toggle-switch-indicator"></span>
+                                </span>
+                              </label>
+                              <!-- End Checkbox Switch -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <img class="avatar avatar-xs mt-1 mr-3" src="<%= process.env.CDN %>assets2/svg/brands/slack.svg" alt="Image Description">
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h5 class="mb-0">Slack</h5>
+                              <p class="font-size-sm mb-0">Communication <a class="link" href="#">Learn more</a></p>
+                            </div>
+
+                            <div class="col-auto">
+                              <!-- Checkbox Switch -->
+                              <label class="toggle-switch" for="connectedAccounts3">
+                                <input id="connectedAccounts3" type="checkbox" class="toggle-switch-input" checked>
+                                <span class="toggle-switch-label">
+                                  <span class="toggle-switch-indicator"></span>
+                                </span>
+                              </label>
+                              <!-- End Checkbox Switch -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <img class="avatar avatar-xs mt-1 mr-3" src="<%= process.env.CDN %>assets2/svg/brands/mailchimp.svg" alt="Image Description">
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h5 class="mb-0">Mailchimp</h5>
+                              <p class="font-size-sm mb-0">Email marketing service</p>
+                            </div>
+
+                            <div class="col-auto">
+                              <!-- Checkbox Switch -->
+                              <label class="toggle-switch" for="connectedAccounts4">
+                                <input id="connectedAccounts4" type="checkbox" class="toggle-switch-input" checked>
+                                <span class="toggle-switch-label">
+                                  <span class="toggle-switch-indicator"></span>
+                                </span>
+                              </label>
+                              <!-- End Checkbox Switch -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <img class="avatar avatar-xs mt-1 mr-3" src="<%= process.env.CDN %>assets2/svg/brands/google-webdev.svg" alt="Image Description">
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col">
+                              <h5 class="mb-0">Google Webdev</h5>
+                              <p class="font-size-sm mb-0">Tools for Web Developers <a class="link" href="#">Learn more</a></p>
+                            </div>
+
+                            <div class="col-auto">
+                              <!-- Checkbox Switch -->
+                              <label class="toggle-switch" for="connectedAccounts5">
+                                <input id="connectedAccounts5" type="checkbox" class="toggle-switch-input">
+                                <span class="toggle-switch-label">
+                                  <span class="toggle-switch-indicator"></span>
+                                </span>
+                              </label>
+                              <!-- End Checkbox Switch -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="socialAccountsSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h4 class="card-title">Social accounts</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <form>
+                  <div class="list-group list-group-lg list-group-flush list-group-no-gutters">
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="tio-twitter list-group-icon mt-1"></i>
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                              <h5 class="mb-0">Twitter</h5>
+                              <a class="font-size-sm" href="#">www.twitter.com/htmlstream</a>
+                            </div>
+
+                            <div class="col-sm-auto">
+                              <a class="btn btn-sm btn-white" href="javascript:;">Disconnect</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="tio-facebook list-group-icon mt-1"></i>
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                              <h5 class="mb-0">Facebook</h5>
+                              <a class="font-size-sm" href="#">www.facebook.com/htmlstream</a>
+                            </div>
+
+                            <div class="col-sm-auto">
+                              <a class="btn btn-sm btn-white" href="javascript:;">Disconnect</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="tio-dribbble list-group-icon mt-1"></i>
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                              <h5 class="mb-0">Dribbble</h5>
+                              <p class="font-size-sm mb-0">Not connected</p>
+                            </div>
+
+                            <div class="col-sm-auto">
+                              <a class="btn btn-sm btn-white" href="javascript:;">Connect</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="tio-linkedin list-group-icon mt-1"></i>
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                              <h5 class="mb-0">Linkedin</h5>
+                              <a class="font-size-sm" href="#">www.linkedin.com/htmlstream</a>
+                            </div>
+
+                            <div class="col-sm-auto">
+                              <a class="btn btn-sm btn-white" href="javascript:;">Disconnect</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+
+                    <!-- List Item -->
+                    <div class="list-group-item">
+                      <div class="media">
+                        <i class="tio-behance list-group-icon mt-1"></i>
+
+                        <div class="media-body">
+                          <div class="row align-items-center">
+                            <div class="col-sm mb-2 mb-sm-0">
+                              <h5 class="mb-0">Behance</h5>
+                              <p class="font-size-sm mb-0">Not connected</p>
+                            </div>
+
+                            <div class="col-sm-auto">
+                              <a class="btn btn-sm btn-white" href="javascript:;">Connect</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End List Item -->
+                  </div>
+                </form>
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div id="deleteAccountSection" class="card mb-3 mb-lg-5">
+              <div class="card-header">
+                <h4 class="card-title">Delete your account</h4>
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <p class="card-text">When you delete your account, you lose access to Front account services, and we permanently delete your personal data. You can cancel the deletion for 14 days.</p>
+
+                <div class="form-group">
+                  <!-- Custom Checkbox -->
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="deleteAccountCheckbox">
+                    <label class="custom-control-label" for="deleteAccountCheckbox">Confirm that I want to delete my account.</label>
+                  </div>
+                  <!-- End Custom Checkbox -->
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Sticky Block End Point -->
+            <div id="stickyBlockEndPoint"></div>
+          </div>
+        </div>
+        <!-- End Row -->
+      </div>
+      <!-- End Content -->
+<!-- modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="editUserModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <!-- Header -->
+          <div class="modal-header">
+            <h4 id="editUserModalTitle" class="modal-title">Crop Image</h4>
+
+            <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary" data-dismiss="modal" aria-label="Close">
+              <i class="tio-clear tio-lg"></i>
+            </button>
+          </div>
+          <!-- End Header -->
+
+          <!-- Body -->
+          <div class="modal-body">
+            <form action="/tadmin/settings" method="POST" id="avatarForm" enctype="multipart/form-data">
+           <div class="box row justify-content-center" style="width: 50%;height: 50%; padding: 0.5em; margin: 0 auto;">
+               <div class="col-10 align-items-center mainImg"></div>
+          </div>
+          <!-- <div class='preview' style="overflow: hidden"></div>
+          <div class="box img-result ">
+            
+          </div> -->
+            <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-white mr-2" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    <button type="submit" class="btn btn-primary save ">Save</button>
+                  </div>
+                </form>
+            </div>
+            
+            <!-- End Tab Content -->
+          </div>
+          <!-- End Body -->
+        </div>
+</div>
+
+</dev>
+
+
+    <!-- JS Implementing Plugins -->
+    <script src="<%= process.env.CDN %>assets2/js/vendor.min.js"></script>
+    
+
+    <!-- JS Front -->
+    <script src="<%= process.env.CDN %>assets2/js/theme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    
+    <!-- JS Plugins Init. -->
+    <script>
+      
+    
+      let mainImg = document.querySelector('.mainImg')
+      let avatarForm = document.querySelector('#avatarForm')
+      let save = document.querySelector('.save')
+      let upload = document.querySelector('#avatarUploader')
+      let modal = document.querySelector('#modal')
+      let cropper = '';
+
+      // function to convert base64encoded image data
+      function b64toBlob(b64Data, contentType, sliceSize) {
+              contentType = contentType || '';
+              sliceSize = sliceSize || 512;
+
+              var byteCharacters = atob(b64Data);
+              console.log('byteCharacters');
+              console.log(byteCharacters);
+              var byteArrays = [];
+
+              for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                  var slice = byteCharacters.slice(offset, offset + sliceSize);
+                  var byteNumbers = new Array(slice.length);
+                  for (var i = 0; i < slice.length; i++) {
+                      byteNumbers[i] = slice.charCodeAt(i);
+                  }
+                  var byteArray = new Uint8Array(byteNumbers);
+                  byteArrays.push(byteArray);
+              }
+            var blob = new Blob(byteArrays, {type: contentType});
+            return blob;
+      }
+
+      // on change upload show image with crop options
+      upload.addEventListener('change', (file) => {
+        if (file.target.files.length) {
+          // start file reader
+          var reader = new FileReader();
+          reader.onload = (data)=> {
+            if(data.target.result){
+              modal.classList.add('show');
+              // create new img element
+              let img = document.createElement('img');
+              img.src = data.target.result;
+              mainImg.appendChild(img);
+
+              // init cropper js
+              cropper = new Cropper(img, {
+              viewMode: 1,
+              aspectRatio: 1,
+            });
+          }
+        };
+        reader.readAsDataURL(file.target.files[0]);
+        }
+      });
+
+      // save on click
+      save.addEventListener('click',async (e)=>{
+        e.preventDefault();
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas().toDataURL();
+        let srcBlock = imgSrc.split(';');
+        let contentType = srcBlock[0].split(":")[1];
+        let realData = srcBlock[1].split(",")[1];
+        
+        // convert image 
+        let blob = b64toBlob(realData, contentType)
+        console.log(blob);
+        // form data
+        let formData = new FormData(avatarForm);
+        formData.append("avatar", blob);
+        
+        // send image to server
+        await fetch('/tadmin/settings', {
+            method: 'POST',
+            body: formData,
+          });
+        // after complete give reload page
+        setTimeout(() => {
+            location.reload();
+          }, 500);
+      });
+      
+      
+      // if modal closed on any outer click, modal will be clear
+      $("#modal").on("hidden.bs.modal", function () {
+        mainImg.removeChild(mainImg.children[0]);
+        cropper.destroy();
+      });
+
+      $(document).on('ready', function () {
+
+
+
+
+        $('button.aboutFormBtn').click( function() {
+            $('form.avatarForm').submit();
+        });
+        $('button.aboutFormBtn').click( function() {
+            $('form.aboutForm').submit();
+        });
+        $('button.emailFormBtn').click( function() {
+            $('form.aboutForm').submit();
+        });
+        $('button.newpassFormBtn').click( function() {
+            $('form.newpassForm').submit();
+        });
+
+
+        
+        // INITIALIZATION OF FILE ATTACH
+        // =======================================================
+        $('.js-file-attach').each(function () {
+          var customFile = new HSFileAttach($(this)).init();
+        });
+
+
+        
+        
+        // INITIALIZATION OF PASSWORD STRENGTH MODULE
+        // =======================================================
+        $('.js-pwstrength').each(function () {
+          var pwstrength = $.HSCore.components.HSPWStrength.init($(this));
+        });
+      });
+    </script>
+
+     <%- include('../parsials/footer.ejs') %>
+
+</body>
+</html>

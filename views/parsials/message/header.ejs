@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= title %></title>
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      href="<%= process.env.CDN %>assets/media/image/favicon.png"
+    />
+
+    <!-- Plugin styles -->
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>vendors/bundle.css"
+      type="text/css"
+    />
+
+    <!-- lightbox -->
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>vendors/lightbox/magnific-popup.css"
+      type="text/css"
+    />
+
+    <!-- App styles -->
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets/css/app.min.css"
+      type="text/css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
+  </head>
+  <body
+    class="stretch-layout sticky-navigation shadow-layout light-header"
+  ></body>
+</html>

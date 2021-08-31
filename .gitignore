@@ -1,0 +1,5 @@
+*.vscode
+*.todo
+*.note
+*.env
+/node_modules
