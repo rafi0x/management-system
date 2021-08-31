@@ -1,11 +1,11 @@
 <%- include('../parsials/header.ejs') %> <%- include('../parsials/nav.ejs')%>
 <link
       rel="stylesheet"
-      href="<%= process.env.CDN %>assets2/css/vendor.min.css"
+      href="<%= process.env.CDN %>assets/css/vendor.min.css"
     />
     <link
       rel="stylesheet"
-      href="<%= process.env.CDN %>assets2/vendor/icon-set/style.css"
+      href="<%= process.env.CDN %>assets/vendor/icon-set/style.css"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 <body class="sticky-navigation shadow-layout light-header">
@@ -21,7 +21,7 @@
             <img
               id="profileCoverImg"
               class="profile-cover-img"
-              src="<%= process.env.CDN %>assets2/img/1920x400/img2.jpg"
+              src="<%= process.env.CDN %>assets/media/image/1920x400/img2.jpg"
               alt="Image Description"
             />
             <!-- End Custom File Cover -->
@@ -47,7 +47,7 @@
                       <img
                         id="avatarImg"
                         class="avatar-img"
-                        src='<%= profile.avatar ? `${process.env.CDN}/uploads/avatars/${profile.avatar}` : `${process.env.CDN}/assets2/img/160x160/img1.jpg` %>'
+                        src='<%= profile.avatar ? `${process.env.CDN}/uploads/avatars/${profile.avatar}` : `${process.env.CDN}/assets/media/image/160x160/img1.jpg` %>'
                         alt="Image Description"
                       />
                       <input
@@ -60,7 +60,7 @@
                                       "mode": "image",
                                       "targetAttr": "src",
                                       "resetTarget": ".js-file-attach-reset-img",
-                                      "resetImg": "<%= process.env.CDN %>/assets2/img/160x160/img1.jpg"
+                                      "resetImg": "<%= process.env.CDN %>/assets/media/image/160x160/img1.jpg"
                                       "allowTypes": [".png", ".jpeg", ".jpg"]
                                    }'
                           />
@@ -599,7 +599,7 @@
                   <tbody>
                     <tr>
                       <td class="d-flex align-items-center">
-                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
                       </td>
                       <td><i class="tio-laptop tio-lg mr-2"></i> Dell XPS 15 <span class="badge badge-soft-success ml-1">Current</span></td>
                       <td>London, UK</td>
@@ -608,7 +608,7 @@
 
                     <tr>
                       <td class="d-flex align-items-center">
-                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Android
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets/svg/brands/chrome.svg" alt="Image Description"> Chrome on Android
                       </td>
                       <td><i class="tio-android-phone-vs tio-lg mr-2"></i> Google Pixel 3a</td>
                       <td>London, UK</td>
@@ -617,7 +617,7 @@
 
                     <tr>
                       <td class="d-flex align-items-center">
-                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets2/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
+                        <img class="avatar avatar-xss mr-2" src="<%= process.env.CDN %>assets/svg/brands/chrome.svg" alt="Image Description"> Chrome on Windows
                       </td>
                       <td><i class="tio-imac tio-lg mr-2"></i> Microsoft Studio 2</td>
                       <td>London, UK</td>
@@ -826,11 +826,11 @@
 
 
     <!-- JS Implementing Plugins -->
-    <script src="<%= process.env.CDN %>assets2/js/vendor.min.js"></script>
+    <script src="<%= process.env.CDN %>assets/js/vendor.min.js"></script>
     
 
     <!-- JS Front -->
-    <script src="<%= process.env.CDN %>assets2/js/theme.min.js"></script>
+    <script src="<%= process.env.CDN %>assets/js/theme.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
     
     <!-- JS Plugins Init. -->

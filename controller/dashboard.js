@@ -9,7 +9,7 @@ controller.getMail = (req, res, next) => {
 };
 
 controller.getTask = (req, res, next) => {
-  res.render("pages/blank");
+  res.render("pages/tasks");
 };
 
 controller.getSettings = (req, res, next) => {
