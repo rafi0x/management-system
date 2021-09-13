@@ -77,32 +77,51 @@ controller.postNewAndUpdateUser = async (req, res, next) => {
 };
 
 // update user
-// controller.postUpdateUser = async (req, res, next) => {
-//   const { userId, usernameEdit, emailEdit, rouleEdit, statusEdit } = req.body;
-//   console.log("from controller");
-//   console.log(req.body);
-//   try {
-//     if (userId) {
-//       const userUpdate = await User.findOneAndUpdate(
-//         { _id: userId },
-//         {
-//           $set: {
-//             username: usernameEdit,
-//             email: emailEdit,
-//             roule: rouleEdit,
-//             status: statusEdit,
-//           },
-//         },
-//         { useFindAndModify: false }
-//       );
-//       return res.redirect("/tadmin/employees");
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     next(err);
-//   }
-// };
+controller.putUpdateUser = async (req, res, next) => {
+  const { userId, rouleEdit, statusEdit } = req.body;
+  console.log(req.body);
+  try {
+    if (rouleEdit.length > 0 && statusEdit.length > 0 && userId) {
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: {
+            roule: rouleEdit,
+            status: statusEdit,
+          },
+        },
+        { useFindAndModify: false }
+      );
+      return res.json({ upate: "siccess" });
+    } else if (rouleEdit.length > 0 && userId) {
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: {
+            roule: rouleEdit,
+          },
+        },
+        { useFindAndModify: false }
+      );
+      return res.json({ upate: "siccess" });
+    } else if (statusEdit.length > 0 && userId) {
+      await User.findOneAndUpdate(
+        { _id: userId },
+        {
+          $set: {
+            status: statusEdit,
+          },
+        },
+        { useFindAndModify: false }
+      );
+      return res.json({ upate: "siccess" });
+    } else {
+      return res.json({ error: "can't be empty" });
+    }
+  } catch (err) {}
+};
 
+// delete  user
 controller.deleteUser = async (req, res, next) => {
   const id = req.params.id;
   try {

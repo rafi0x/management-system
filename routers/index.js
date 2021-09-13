@@ -3,8 +3,16 @@ const authRoutes = require("./auth");
 const dashboardRoutes = require("./dashboard");
 const profileRoutes = require("./profile");
 const messagesRoutes = require("./message");
+const employeesRoutes = require("./employee");
+const tasksRoutes = require("./task");
 
-const routes = [dashboardRoutes, profileRoutes, messagesRoutes];
+const routes = [
+  dashboardRoutes,
+  profileRoutes,
+  messagesRoutes,
+  employeesRoutes,
+  tasksRoutes,
+];
 
 const routers = [
   {

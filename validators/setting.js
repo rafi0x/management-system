@@ -9,7 +9,7 @@ const profileValidator = [
     .isLength({ min: 3, max: 16 })
     .withMessage("Invalid lastname")
     .trim(),
-    body("email")
+  body("email")
     .isEmail()
     .withMessage("Invalid email")
     .custom(async (email) => {
@@ -17,7 +17,7 @@ const profileValidator = [
       if (userEmail) {
         return Promise.reject("Email already exist!");
       }
-    })
+    }),
   body("phone").isLength({ min: 11 }).withMessage("Invalid number").trim(),
   body("password")
     .isLength({ min: 8, max: 20 })
@@ -30,3 +30,5 @@ const profileValidator = [
     return value;
   }),
 ];
+
+module.exports = profileValidator;

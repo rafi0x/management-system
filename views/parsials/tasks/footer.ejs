@@ -21,6 +21,11 @@
 <script src="<%= process.env.CDN %>vendors/datepicker/daterangepicker.js"></script>
 <script src="<%= process.env.CDN %>assets/js/examples/datepicker.js"></script>
 
+<!-- <script src="<%= process.env.CDN %>assets/js/all.min.js"></script> -->
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
 <!-- App scripts -->
 <script src="<%= process.env.CDN %>assets/js/app.min.js"></script>
 
@@ -32,7 +37,8 @@
         placeholder: "Type something... ",
         theme: "snow"
     });
-
+    
+    // $('select').selectpicker();
     $(function () {
         $(document).on('click', '.app-block .app-content .app-action .action-left input[type="checkbox"]', function () {
             $('.app-lists ul li input[type="checkbox"]').prop('checked', $(this).prop('checked'));

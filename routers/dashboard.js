@@ -2,15 +2,11 @@
 const router = require("express").Router();
 
 // controllers
-const {
-  getIndx,
-  getMail,
-  getMeetings,
-  getTask,
-} = require("../controller/dashboard");
+const { getIndx, getMail, getMeetings } = require("../controller/dashboard");
 const {
   getEmployees,
   postNewAndUpdateUser,
+  putUpdateUser,
   deleteUser,
 } = require("../controller/employees");
 
@@ -27,7 +23,7 @@ const {
 } = require("../middlewares/common/checker");
 const commonMiddleware = [adminAccess, profileCheck];
 const locals = require("../middlewares/common/locals");
-const { imgUpload } = require("../middlewares/common/uploader");
+const { imgUpload, multiUpload } = require("../middlewares/common/uploader");
 
 // index route of dahsboard
 router.route("/").get(locals("Dashboard"), commonMiddleware, getIndx);
@@ -41,13 +37,18 @@ router
   .get(locals("Meetings"), commonMiddleware, getMeetings);
 
 // tasks
-router.route("/tasks").get(locals("Tasks"), commonMiddleware, getTask);
 
 // employees
 router
   .route("/employees")
   .get(locals("Employees"), commonMiddleware, getEmployees)
-  .post(locals("Employess"), userAddValidator, postNewAndUpdateUser);
+  .post(
+    locals("Employess"),
+    commonMiddleware,
+    userAddValidator,
+    postNewAndUpdateUser
+  )
+  .put(locals("Employess"), commonMiddleware, putUpdateUser);
 router.get("/employees/delete/:id", commonMiddleware, deleteUser);
 
 // seetings

@@ -8,10 +8,6 @@ controller.getMail = (req, res, next) => {
   res.render("pages/blank");
 };
 
-controller.getTask = (req, res, next) => {
-  res.render("pages/tasks");
-};
-
 controller.getSettings = (req, res, next) => {
   res.render("pages/settings");
 };
