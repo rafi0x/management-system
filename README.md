@@ -4,7 +4,6 @@
 - Realtime chat.
 - Assign task for single or multiple users.
 - Role based authorization.
-- Video conference.
 - Mail services.
 - User management.
 - Login, password reset, 2fa
@@ -16,4 +15,4 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 
-*note: taskManager, videoConferrence, mailService isn't complete yet.*
+*note: taskManager, mailService isn't complete yet.*
