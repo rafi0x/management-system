@@ -22,7 +22,7 @@
 
                 <div class="row align-items-center gx-2">
                   <div class="col">
-                    <span class="js-counter display-4 text-dark"><%= user.length %></span>
+                    <span class="js-counter display-4 text-dark"><%= data.length %></span>
                   </div>
 
                   <div class="col-auto">
@@ -110,7 +110,7 @@
         <!-- End Stats -->
 
         <!-- Card -->
-        <div class="card">
+        <div class="card" style="max-height: 40rem; overflow: auto;">
           <!-- Header -->
           <div class="card-header">
             <div class="row justify-content-between align-items-center flex-grow-1">
@@ -199,18 +199,18 @@
               </thead>
 
               <tbody>
-              <% for( let info of user ) { %> 
+              <% for( let user of data ) { %> 
                 <tr>
                   <td class="table-column-pr-0">
                   </td>
                   <td class="table-column-pl-0">
-                    <a class="d-flex align-items-center" href="/tadmin/profile/<%= info._id %>">
+                    <a class="d-flex align-items-center" href="/tadmin/profile/<%= user._id %>">
                       <div class="avatar avatar-circle">
-                        <img class="avatar-img" src='<%= info.avatar ? `${process.env.CDN}/uploads/avatars/${info.avatar}` : `${process.env.CDN}/assets/media/image/160x160/img1.jpg` %>' alt="avatar">
+                        <img class="avatar-img" src='<%= user.avatar ? `${process.env.CDN}/uploads/avatars/${user.avatar}` : `${process.env.CDN}/assets/media/image/160x160/img1.jpg` %>' alt="avatar">
                       </div>
                       <div class="ml-3">
-                        <span class="d-block h5 text-hover-primary mb-0"><%= `${info.name.firstname} ${info.name.lastname}` %></span>
-                        <span class="d-block font-size-sm text-body"><%= info.email %></span>
+                        <span class="d-block h5 text-hover-primary mb-0"><%= `${user.name.firstname} ${user.name.lastname}` %></span>
+                        <span class="d-block font-size-sm text-body"><%= user.email %></span>
                       </div>
                     </a>
                   </td>
@@ -220,16 +220,16 @@
                   </td> -->
                   <!-- <td> <span class="text-hide">Code: GB</span></td> -->
                   <td class="table-column-pl-0">
-                    <span class="legend-indicator <%= info.status == 'active' ? 'bg-success' : 'bg-danger'%>"></span><%= info.status %>
+                    <span class="legend-indicator <%= user.status == 'active' ? 'bg-success' : 'bg-danger'%>"></span><%= user.status %>
                   </td>
-                  <td class="table-column-pl-0"><%= info.roule %></td>
+                  <td class="table-column-pl-0"><%= user.role %></td>
                   <td class="table-column-pl-0">
-                      <a class="btn btn-sm btn-danger deleteUser" href="/tadmin/employees/delete/<%= info._id %> " style="color: #fff">
+                      <a class="btn btn-sm btn-danger deleteUser" href="/tadmin/employees/delete/<%= user._id %> " style="color: #fff">
                         <i class="mr-1"data-feather="trash"></i>Remove
                       </a>
                   </td>
                   <td class="table-column-pl-0">
-                      <button class="btn btn-sm btn-warning editBtnUsers" data-toggle="modal" data-target="#editUserModal" data-id='<%= info._id %>'>
+                      <button class="btn btn-sm btn-warning editBtnUsers" data-toggle="modal" data-target="#editUserModal" data-id='<%= user._id %>'>
                         <i class="tio-edit pr-1"></i> Edit
                       </button>
                   </td>
@@ -311,19 +311,19 @@
 
                   <!-- Form Group -->
                   <div class="row form-group">
-                    <label for="editOrganizationModalLabel" class="col-sm-3 col-form-label input-label">Roule</label>
+                    <label for="editOrganizationModalLabel" class="col-sm-3 col-form-label input-label">role</label>
 
                     <div class="col-sm-9">
                       <div class="js-form-message">
                         <!-- Select2 -->
-                        <div id='roule-error' class="invalid-feedback addUserFields d-block"></div>
+                        <div id='role-error' class="invalid-feedback addUserFields d-block"></div>
                         <select class="js-select2-custom custom-select" size="1"
                                 data-hs-select2-options='{
                                 "minimumResultsForSearch": "Infinity",
-                                "placeholder": "Select roule"
+                                "placeholder": "Select role"
                                 }'
-                                name="roule">
-                            <option value="empty">set roule</option>
+                                name="role">
+                            <option value="empty">set role</option>
                             <option value="admin">Admin</option>
                             <option value="manager">Manager</option>
                             <option value="srDev">Senior Developer</option>
@@ -372,11 +372,11 @@
             <!-- Tab Content -->
             <div class="tab-content" id="editUserModalTabContent">
               <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <form id='editUserForm' action="/tadmin/employees/" method="POST">
+                <form id='editUserForm' action="/tadmin/employees/" method="PUT">
                 
                   <!-- Form Group -->
                   <div class="row form-group">
-                    <label for="editOrganizationModalLabel" class="col-sm-3 col-form-label input-label">Roule</label>
+                    <label for="editOrganizationModalLabel" class="col-sm-3 col-form-label input-label">role</label>
 
                     <div class="col-sm-9">
                       <div class="js-form-message">
@@ -385,12 +385,12 @@
                         <select class="js-select2-custom custom-select" size="1"
                                 data-hs-select2-options='{
                                 "minimumResultsForSearch": "Infinity",
-                                "placeholder": "Select roule"
+                                "placeholder": "Select role"
                                 }'
-                                name="rouleEdit"
+                                name="roleEdit"
                                 value=''>
                             
-                            <option value="">set roule</option>
+                            <option value="">set role</option>
                             <option value="admin">Admin</option>
                             <option value="manager">Manager</option>
                             <option value="srDev">Senior Developer</option>

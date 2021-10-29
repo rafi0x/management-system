@@ -1,5 +1,5 @@
 // dependencies
-const route = require("express").Router();
+const router = require("express").Router();
 const { getLogin, postLogin } = require("../controller/auth/auth");
 const { getResetPass, postResetPass } = require("../controller/auth/resetPass");
 const { getSetPass, postSetPass } = require("../controller/auth/setNewPass");
@@ -8,30 +8,30 @@ const loginValidator = require("../validators/login");
 const newPassValidartor = require("../validators/resetPassValid");
 
 // middlewares
-const { authAccess } = require("../middlewares/common/checker");
 const locals = require("../middlewares/common/locals");
+const { authAccess } = require("../middlewares/common/checker");
+router.use(authAccess);
 
 // user login route
-route
+router
   .route("/")
-  .get(locals("Login"), authAccess, getLogin)
-  .post(locals("Login"), authAccess, loginValidator, postLogin);
+  .get(locals("Login"), getLogin)
+  .post(locals("Login"), loginValidator, postLogin);
 
 // route.get("/reset*/:id", getResetPass);
 // send request for password reset route
-route
+router
   .route("/reset")
-  .get(locals("Reset Password"), authAccess, getResetPass)
-  .post(locals("Reset Password"), authAccess, postResetPass);
+  .get(locals("Reset Password"), getResetPass)
+  .post(locals("Reset Password"), postResetPass);
 
 // set new password route
-route.get("/reset/new/:key", locals("Reset Password"), authAccess, getSetPass);
-route.post(
+router.get("/reset/new/:key", locals("Reset Password"), getSetPass);
+router.post(
   "/reset/new",
   locals("Reset Password"),
   newPassValidartor,
-  authAccess,
   postSetPass
 );
 
-module.exports = route;
+module.exports = router;

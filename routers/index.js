@@ -1,27 +1,44 @@
+// api routes
+const apiRoutes = require("../api/routers");
+
 // routes
 const authRoutes = require("./auth");
 const dashboardRoutes = require("./dashboard");
 const profileRoutes = require("./profile");
 const messagesRoutes = require("./message");
 const employeesRoutes = require("./employee");
-const tasksRoutes = require("./task");
+const taskRoutes = require("./task");
 
-const routes = [
-  dashboardRoutes,
-  profileRoutes,
-  messagesRoutes,
-  employeesRoutes,
-  tasksRoutes,
-];
+// all routes
 
 const routers = [
+  {
+    path: "/tadmin/messages",
+    handeler: messagesRoutes,
+  },
+  {
+    path: "/tadmin/profile",
+    handeler: profileRoutes,
+  },
+  {
+    path: "/tadmin/employees",
+    handeler: employeesRoutes,
+  },
+  {
+    path: "/tadmin/tasks",
+    handeler: taskRoutes,
+  },
+  {
+    path: "/tadmin",
+    handeler: dashboardRoutes,
+  },
   {
     path: "/auth",
     handeler: authRoutes,
   },
   {
-    path: "/tadmin",
-    handeler: routes,
+    path: "/api",
+    handeler: apiRoutes,
   },
   {
     path: "",

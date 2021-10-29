@@ -5,10 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app"
+    "start": "node app",
+    "demo": "export NODE_ENV=demo && nodemon app"
   },
   "keywords": [],
-  "author": "",
+  "author": "rafi0x",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -18,11 +19,13 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "express-useragent": "^1.0.15",
     "express-validator": "^6.12.1",
     "mongoose": "^5.13.3",
     "multer": "^1.4.2",
     "nodemailer": "^6.6.3",
-    "socket.io": "^4.1.3"
+    "socket.io": "^4.2.0",
+    "socket.io-client": "^4.2.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

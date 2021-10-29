@@ -12,10 +12,7 @@ controller.getUserProfile = async (req, res, next) => {
         data: userProfile,
       });
     } else {
-      res.render("pages/profile", {
-        title: "Profile",
-        profile: "",
-      });
+      res.render("pages/profile");
     }
   } catch (error) {
     next(error);

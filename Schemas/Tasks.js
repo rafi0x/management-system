@@ -3,7 +3,7 @@ const { Schema, model } = require("mongoose");
 const taskSchema = new Schema({
   creator: {
     type: Schema.Types.ObjectId,
-    ref: "Users",
+    ref: "User",
   },
   title: {
     type: String,
@@ -18,7 +18,7 @@ const taskSchema = new Schema({
     type: String,
     require: true,
   },
-  users: [{ type: Schema.Types.ObjectId, ref: "Users" }],
+  users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   attachments: { type: Array, default: [] },
   deadline: {
     type: Date,

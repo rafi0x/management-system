@@ -3,7 +3,7 @@ const express = require("express");
 const morgan = require("morgan");
 const session = require("express-session");
 const cors = require("cors");
-const path = require("path");
+const userAgent = require("express-useragent");
 const MongoDBStore = require("connect-mongodb-session")(session);
 
 // internal dependencies
@@ -32,6 +32,7 @@ const middleware = [
     store,
   }),
   isUserLoggedIn(),
+  userAgent.express(),
 ];
 
 // using middlwares in app.use

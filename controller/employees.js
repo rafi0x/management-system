@@ -2,7 +2,7 @@
 const User = require("../Schemas/Users");
 const Profile = require("../Schemas/Profile");
 const bcrypt = require("bcrypt");
-const { errorMsgFormatter, randomTextGen } = require("../utils/utilites");
+const { randomTextGen } = require("../utils/utilites");
 const { validationResult } = require("express-validator");
 const { mailTransporter, newUserMailTemplate } = require("../utils/mailer");
 
@@ -12,10 +12,11 @@ const controller = {};
 controller.getEmployees = async (req, res, next) => {
   try {
     const user = await User.find();
-    if (user) {
-      res.locals.user = user;
-      res.render("pages/employees");
+    if (user.length !== 0) {
+      res.locals.data = user;
+      return res.render("pages/employees");
     }
+    return res.render("pages/employees");
   } catch (error) {
     next(error);
   }
@@ -23,7 +24,7 @@ controller.getEmployees = async (req, res, next) => {
 
 // add new employess
 controller.postNewAndUpdateUser = async (req, res, next) => {
-  const { firstname, lastname, username, email, roule, status } = req.body;
+  const { firstname, lastname, username, email, role, status } = req.body;
   const inputErr = validationResult(req);
   if (!inputErr.isEmpty()) {
     // send error as json
@@ -42,7 +43,7 @@ controller.postNewAndUpdateUser = async (req, res, next) => {
         username,
         email,
         password: hashPassword,
-        roule,
+        role,
         status,
       });
       const userData = await finalUserData.save();
@@ -78,33 +79,36 @@ controller.postNewAndUpdateUser = async (req, res, next) => {
 
 // update user
 controller.putUpdateUser = async (req, res, next) => {
-  const { userId, rouleEdit, statusEdit } = req.body;
-  console.log(req.body);
+  const { userId, roleEdit, statusEdit } = req.body;
+
   try {
-    if (rouleEdit.length > 0 && statusEdit.length > 0 && userId) {
+    if (roleEdit && statusEdit && userId) {
+      console.log(req.body);
       await User.findOneAndUpdate(
         { _id: userId },
         {
           $set: {
-            roule: rouleEdit,
+            role: roleEdit,
             status: statusEdit,
           },
         },
         { useFindAndModify: false }
       );
-      return res.json({ upate: "siccess" });
-    } else if (rouleEdit.length > 0 && userId) {
+      return res.json({ upate: "success" });
+    } else if (roleEdit && userId) {
+      console.log(req.body);
       await User.findOneAndUpdate(
         { _id: userId },
         {
           $set: {
-            roule: rouleEdit,
+            role: roleEdit,
           },
         },
         { useFindAndModify: false }
       );
-      return res.json({ upate: "siccess" });
-    } else if (statusEdit.length > 0 && userId) {
+      return res.json({ upate: "success" });
+    } else if (statusEdit && userId) {
+      console.log(req.body);
       await User.findOneAndUpdate(
         { _id: userId },
         {
@@ -114,11 +118,13 @@ controller.putUpdateUser = async (req, res, next) => {
         },
         { useFindAndModify: false }
       );
-      return res.json({ upate: "siccess" });
+      return res.json({ upate: "success" });
     } else {
       return res.json({ error: "can't be empty" });
     }
-  } catch (err) {}
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // delete  user

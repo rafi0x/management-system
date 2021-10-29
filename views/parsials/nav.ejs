@@ -33,10 +33,10 @@
     </div>
     <div>
       <h5>
-        <%= profile.name ? `${profile.name.firstname} ${profile.name.lastname}` :
-        'Profile incomplete' %>
+        <%= profile.name ? `${profile.name.firstname} ${profile.name.lastname}`
+        : 'Profile incomplete' %>
       </h5>
-      <p class="text-muted">Administrator</p>
+      <p class="text-muted"><%= user.role %></p>
       <ul class="nav">
         <!-- <li class="nav-item">
           <a
@@ -48,7 +48,7 @@
             <i data-feather="user"></i>
           </a>
         </li> -->
-       
+
         <!-- <li class="nav-item">
           <a
             href="/tadmin/logout"
@@ -64,11 +64,16 @@
                   <i data-feather="settings"></i>
                </a>
              </li> -->
-             <li class="nav-item">
-               <a href="/tadmin/logout" class="btn nav-link bg-danger-bright" title="Logout" data-toggle="tooltip"> 
+        <li class="nav-item">
+          <a
+            href="/tadmin/logout"
+            class="btn nav-link bg-danger-bright"
+            title="Logout"
+            data-toggle="tooltip"
+          >
             <i data-feather="log-out" class="mr-2"></i> Logout
           </a>
-       </li>
+        </li>
       </ul>
     </div>
   </header>
@@ -91,14 +96,14 @@
         >
           <i class="nav-link-icon" data-feather="message-circle"></i>
           <span>Messages</span>
-          <span class="badge badge-danger">2</span>
+          <!-- <span class="badge badge-danger">2</span> -->
         </a>
       </li>
       <li>
         <a class="<%= title === 'Mail' ? 'active' : '' %>" href="/tadmin/mail">
           <i class="nav-link-icon" data-feather="mail"></i>
           <span>Mail</span>
-          <span class="badge badge-success">2</span>
+          <!-- <span class="badge badge-success">2</span> -->
         </a>
       </li>
       <li>
@@ -108,16 +113,7 @@
         >
           <i class="nav-link-icon" data-feather="check-circle"></i>
           <span>Tasks</span>
-          <span class="badge badge-warning">2</span>
-        </a>
-      </li>
-      <li>
-        <a
-          class="<%= title === 'Meetings' ? 'active' : '' %>"
-          href="/tadmin/meetings"
-        >
-          <i class="nav-link-icon" data-feather="copy"></i>
-          <span>Meetings</span>
+          <!-- <span class="badge badge-warning">2</span> -->
         </a>
       </li>
       <!-- <li>
@@ -232,6 +228,7 @@
                     <li><a href="vector-map.html">Vector</a></li>
                 </ul>
             </li> -->
+      <% if (user.role === "admin" ) { %>
       <li>
         <a
           class="<%= title === 'Employees' ? 'active' : '' %>"
@@ -241,6 +238,7 @@
           <span>Employees</span>
         </a>
       </li>
+      <% } %>
       <li>
         <a
           class="<%= title === 'Settings' ? 'active' : '' %>"

@@ -62,7 +62,7 @@ editBtn.forEach((singleBtn) => {
         // form data
         let formData = new URLSearchParams(new FormData(editForm));
         formData.append("userId", id);
-        console.log(formData);
+
         // send data to server
         let response = await fetch("/tadmin/employees", {
           method: "PUT",
@@ -71,9 +71,10 @@ editBtn.forEach((singleBtn) => {
         // response from serevr
         let result = await response.json();
         // if server send error
-        console.log(result);
+        console.log(result.error);
         if (result.error) {
           // make red on blank submit
+          console.log("in if");
           editForm.querySelectorAll("select").forEach((i) => {
             i.classList.add("errorFild");
             // i.querySelector('option').textContent = result.error;

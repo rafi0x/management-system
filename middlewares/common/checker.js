@@ -33,10 +33,10 @@ check.isUserLoggedIn = () => {
 
 // check if the use have a profile, if not redirect to create profile
 check.profileCheck = (req, res, next) => {
-  if (req.profile) {
-    return next();
-  } else {
+  if (!req.profile) {
     return res.redirect("/tadmin/complete-profile");
+  } else {
+    return next();
   }
 };
 // if user have profile then cant access
@@ -72,6 +72,16 @@ check.userLogout = (req, res, next) => {
     }
   });
   res.redirect("/auth");
+};
+
+check.roleCheck = (arrayAllowedOfRoles) => {
+  return (req, res, next) => {
+    console.log(req.user.role);
+    if (arrayAllowedOfRoles.indexOf(req.user.role) === -1) {
+      return next(403);
+    }
+    return next();
+  };
 };
 
 module.exports = check;

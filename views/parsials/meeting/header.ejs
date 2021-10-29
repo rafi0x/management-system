@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= title %></title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="" />
+    <script
+      defer
+      src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"
+    ></script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="<%= process.env.CDN %>assets/js/meeting.js" defer></script>
+    <!-- Plugin styles -->
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>vendors/bundle.css"
+      type="text/css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets/vendor/icon-set/style.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets/css/theme.minc619.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets/css/app.min.css"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>assets/css/meetings.css"
+      type="text/css"
+    />
+  </head>
+  <!-- ::side nav:: -->
+</html>

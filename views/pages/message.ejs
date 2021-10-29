@@ -1,10 +1,9 @@
 <%- include('../parsials/message/header.ejs') %>
 
-
-  <!-- ::side nav:: -->
+<!-- ::side nav:: -->
 <%-include('../parsials/nav.ejs')%>
 <dev id="main">
-<%- include('../parsials/navBar.ejs')%>
+  <%- include('../parsials/navBar.ejs')%>
   <!-- begin::main content -->
   <main class="main-content">
     <!-- begin::chat block -->
@@ -13,7 +12,6 @@
       <div class="col-lg-4 chat-sidebar border-right">
         <!-- begin::chat sidebar search -->
         <div>
-          
           <form id="contactSearchForm">
             <div class="input-group">
               <input
@@ -22,7 +20,6 @@
                 placeholder="Search contacts"
                 aria-describedby="button-addon1"
               />
-              
             </div>
           </form>
         </div>
@@ -36,20 +33,39 @@
               role="tabpanel"
               aria-labelledby="pills-home-tab"
             >
-              <p id='title-chat-list' class="small mb-0"></p>
+              <p id="title-chat-list" class="small mb-0"></p>
               <div class="chat-lists">
                 <div id="chat-list" class="list-group list-group-flush">
-                  <% for( info of data ) { %>
-                    <% if (info.creator.id.toString() === profile._id.toString()) { %>
-                      <a href="#" class=" list-group-item d-flex align-items-center link-1 pl-0 pr-0 pb-3 pt-3" onclick="getMessages('<%= info._id %>','<%= info.participant.name%>','<%= info.participant.avatar %>','<%= info.participant.id %>')">
+                  <% for( info of data ) { %> <% if (info.creator.id.toString()
+                  === profile._id.toString()) { %>
+                  <a
+                    href="#"
+                    class="
+                      list-group-item
+                      d-flex
+                      align-items-center
+                      link-1
+                      pl-0
+                      pr-0
+                      pb-3
+                      pt-3
+                    "
+                    onclick="getMessages('<%= info._id %>','<%= info.participant.name%>','<%= info.participant.avatar %>','<%= info.participant.id %>')"
+                  >
                     <div class="pr-3">
                       <div class="avatar avatar-sm m-r-15 avatar-state-success">
-                          <img src="<%= info.participant.avatar ? `/uploads/avatars/${info.participant.avatar}` : `/assets2/img/160x160/img1.jpg`; %>" class="rounded-circle" alt="user">
+                        <img
+                          src="<%= info.participant.avatar ? `/uploads/avatars/${info.participant.avatar}` : `/assets2/img/160x160/img1.jpg`; %>"
+                          class="rounded-circle"
+                          alt="user"
+                        />
                       </div>
                     </div>
                     <div>
                       <h6 class="mb-1"><%= `${info.participant.name}` %></h6>
-                      <span class="small text-muted">last seen at: 2:32 PM</span>
+                      <span class="small text-muted"
+                        >last seen at: 2:32 PM</span
+                      >
                     </div>
                     <!-- <div class="text-right ml-auto">
                       <span class="badge badge-primary badge-pill ml-auto"
@@ -57,16 +73,35 @@
                       >
                     </div> -->
                   </a>
-                    <% } else { %>
-                     <a href="#" class=" list-group-item d-flex align-items-center link-1 pl-0 pr-0 pb-3 pt-3" onclick="getMessages('<%= info._id %>','<%= info.creator.name %>','<%= info.creator.avatar %>','<%= info.creator.id %>')">
+                  <% } else { %>
+                  <a
+                    href="#"
+                    class="
+                      list-group-item
+                      d-flex
+                      align-items-center
+                      link-1
+                      pl-0
+                      pr-0
+                      pb-3
+                      pt-3
+                    "
+                    onclick="getMessages('<%= info._id %>','<%= info.creator.name %>','<%= info.creator.avatar %>','<%= info.creator.id %>')"
+                  >
                     <div class="pr-3">
                       <div class="avatar avatar-sm m-r-15 avatar-state-success">
-                          <img src="<%= info.creator.avatar ? `/uploads/avatars/${info.creator.avatar}` : `/assets2/img/160x160/img1.jpg`; %>" class="rounded-circle" alt="user">
+                        <img
+                          src="<%= info.creator.avatar ? `/uploads/avatars/${info.creator.avatar}` : `/assets2/img/160x160/img1.jpg`; %>"
+                          class="rounded-circle"
+                          alt="user"
+                        />
                       </div>
                     </div>
                     <div>
                       <h6 class="mb-1"><%= `${info.creator.name}` %></h6>
-                      <span class="small text-muted">last seen at: 2:32 PM</span>
+                      <span class="small text-muted"
+                        >last seen at: 2:32 PM</span
+                      >
                     </div>
                     <!-- <div class="text-right ml-auto">
                       <span class="badge badge-primary badge-pill ml-auto"
@@ -74,14 +109,14 @@
                       >
                     </div> -->
                   </a>
-                  <% } %>
-                  <% } %>
-
+                  <% } %> <% } %>
                 </div>
 
                 <!-- for search result -->
-                <div id="search-result-show" class="list-group list-group-flush d-none">
-                </div>
+                <div
+                  id="search-result-show"
+                  class="list-group list-group-flush d-none"
+                ></div>
               </div>
             </div>
           </div>
@@ -91,7 +126,11 @@
       <!-- end::chat sidebar -->
 
       <!-- blank message box -->
-      <div id="blank-message-box" class="col-lg-8 chat-content"><h3 class="text-center m-auto text-muted">select contact to start messaging</h3></div>
+      <div id="blank-message-box" class="col-lg-8 chat-content">
+        <h3 class="text-center m-auto text-muted">
+          select contact to start messaging
+        </h3>
+      </div>
 
       <!-- begin::chat content -->
       <div id="message-box" class="col-lg-8 chat-content d-none">
@@ -108,7 +147,7 @@
               </div>
             </div>
             <div>
-              <h6 id="currentConversationName" class="mb-1"> </h6>
+              <h6 id="currentConversationName" class="mb-1"></h6>
               <div class="m-0 small text-success">typing...</div>
             </div>
             <div class="ml-auto">
@@ -140,14 +179,18 @@
         <!-- end::chat header -->
 
         <!-- begin::messages -->
-        <div id="chat-body" class="messages">
-          
-        </div>
+        <div id="chat-body" class="messages"></div>
         <!-- end::messages -->
 
         <!-- begin::chat footer -->
         <div class="chat-footer border-top">
-          <form class="d-flex" id="send-nessages" method="post" action="/tadmin/messages/new-message/" enctype="multipart/form-data">
+          <form
+            class="d-flex"
+            id="send-nessages"
+            method="post"
+            action="/tadmin/messages/new-message/"
+            enctype="multipart/form-data"
+          >
             <button
               class="btn btn-outline-light mr-2"
               type="button"
@@ -175,8 +218,14 @@
                 data-toggle="tooltip"
               >
                 <i data-feather="paperclip" class="width-15 height-15"></i>
-                <input type="file" multiple name="attachment" class="" id="attachment" />
-            </lable>
+                <input
+                  type="file"
+                  multiple
+                  name="attachment"
+                  class=""
+                  id="attachment"
+                />
+              </lable>
             </div>
           </form>
         </div>
@@ -187,16 +236,13 @@
     <!-- begin::chat block -->
   </main>
   <!-- end::main content -->
-<!-- `<div class="message-item message-item-divider">
+  <!-- `<div class="message-item message-item-divider">
             <span>Today</span>
           </div>
           ` -->
-      <script>
-  let loggedIn_user_id = "<%= profile._id %>"; 
-  let socket = io.connect('<%= process.env.DOMAIN %>');
-  
-  
-
+  <script>
+    let loggedIn_user_id = "<%= profile._id %>";
+    let socket = io.connect("<%= process.env.DOMAIN %>");
   </script>
   <script src="/assets/js/message.js"></script>
 

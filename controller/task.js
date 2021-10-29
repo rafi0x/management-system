@@ -1,30 +1,26 @@
 const { validationResult } = require("express-validator");
-const Users = require("../Schemas/Users");
 const Tasks = require("../Schemas/Tasks");
-const { inputFilter } = require("../utils/utilites");
 
 const controller = {};
 
 // get all tasks form db and show them
 controller.getTask = async (req, res, next) => {
   try {
-    const tasks = await Tasks.find();
-    if (tasks) {
+    console.log(res.userAgent);
+    const tasks = await Tasks.find({
+      users: { $in: [req.user._id] },
+    }).populate({
+      path: "users",
+      select: "id name avatar",
+    });
+    if (tasks.length !== 0) {
       res.locals.tasks = tasks;
       return res.render("pages/tasks");
     }
+    res.locals.tasks = [];
+    return res.render("pages/tasks");
   } catch (err) {
-    next(err);
-  }
-};
-
-// this is for search user by their roule, in future it can be filter with teams, now there in no teams exist
-controller.searchUserByTeam = async (req, res, next) => {
-  try {
-    const keyword = new RegExp(inputFilter(req.params.team), "i");
-    const data = await Users.find({ roule: keyword }, "name id avatar");
-    res.json({ user: data });
-  } catch (err) {
+    console.log(err);
     next(err);
   }
 };

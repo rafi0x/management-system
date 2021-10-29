@@ -108,15 +108,12 @@ searchInput.addEventListener("keydown", () => {
   clearTimeout(searchTimer);
 });
 
-// fucntion for find user on search
+// fucntion call user find api
 async function searchUser() {
   try {
-    let response = await fetch(
-      `/tadmin/messages/new-conversation/${searchInput.value}`,
-      {
-        method: "POST",
-      }
-    );
+    let response = await fetch(`/api/search-user/${searchInput.value}`, {
+      method: "POST",
+    });
     let result = await response.json();
     if (result.length > 0) {
       chat_list_title.textContent = "Available Contacts"; // section title
@@ -205,7 +202,7 @@ async function getMessages(
             if (res.sender.id == loggedIn_user_id) {
               chatBody.innerHTML += messageShow.attachment(file, "me"); // add the template with data, template is in a function
             } else {
-              chatBody.innerHTML += messageShow.attachment(file);
+              chatBody.innerHTML += messageShow.attachment(file, "other");
             }
           });
         }
@@ -213,7 +210,7 @@ async function getMessages(
           if (res.sender.id == loggedIn_user_id) {
             chatBody.innerHTML += messageShow.text(res.message, "me"); // add the template with data, template is in a function
           } else {
-            chatBody.innerHTML += messageShow.text(res.message);
+            chatBody.innerHTML += messageShow.text(res.message, "other");
           }
         }
       });
@@ -247,7 +244,7 @@ socket.on("new_message", (data) => {
           } else {
             chatBody.insertAdjacentHTML(
               "beforeend",
-              messageShow.attachment(file, "")
+              messageShow.attachment(file, "other")
             );
           }
         });
@@ -261,7 +258,7 @@ socket.on("new_message", (data) => {
         } else {
           chatBody.insertAdjacentHTML(
             "beforeend",
-            messageShow.text(data.message, "")
+            messageShow.text(data.message, "other")
           );
         }
         // when new message arrives, scroll to bottom
@@ -284,7 +281,7 @@ messageForm.onsubmit = async function (event) {
     formData.append("receiverAvatar", receiverData.avatar);
     formData.append("conversationId", this_conversation_id);
 
-    await fetch("/tadmin/messages/new-message", {
+    await fetch("/api/new-message/", {
       method: "POST",
       body: formData,
     });

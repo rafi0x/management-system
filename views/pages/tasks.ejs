@@ -1,10 +1,7 @@
 <!-- ::header:: -->
 <%- include('../parsials/tasks/header.ejs') %>
 <%-include('../parsials/nav.ejs')%>
-<style type="text/css">
-    .error-field{
-        border-color: #ed4c78;
-    }
+
 </style>
 <dev id="main">
  <%- include('../parsials/navBar.ejs')%>
@@ -12,64 +9,20 @@
     <main class="main-content">
 
         <div class="row app-block">
-            <div class="col-md-3 app-sidebar d-none">
-                <div class="card">
-                    <div class="card-body">
-                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newTaskModal">
-                            <i data-feather="plus" class="mr-2"></i>
-                            New Task
-                        </button>
-                    </div>
-                    <div class="app-sidebar-menu">
-                        <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item active d-flex align-items-center">
-                                <i data-feather="mail" class="mr-2 width-15 height-15"></i>
-                                All
-                            </a>
-                            <a href="#" class="list-group-item">
-                                <i data-feather="send" class="mr-2 width-15 height-15"></i>
-                                My Task
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <h6 class="mb-0">Tags</h6>
-                        </div>
-                        <div class="list-group list-group-flush">
-                            <a href="#" class="list-group-item d-flex align-items-center">
-                                <span class="text-warning fa fa-circle mr-2"></span>
-                                Theme Support
-                                <span class="small ml-auto">5</span>
-                            </a>
-                            <a href="#" class="list-group-item d-flex align-items-center">
-                                <span class="text-success fa fa-circle mr-2"></span>
-                                Freelance
-                            </a>
-                            <a href="#" class="list-group-item d-flex align-items-center">
-                                <span class="text-danger fa fa-circle mr-2"></span>
-                                Social
-                            </a>
-                            <a href="#" class="list-group-item d-flex align-items-center">
-                                <span class="text-info fa fa-circle mr-2"></span>
-                                Friends
-                            </a>
-                            <a href="#" class="list-group-item d-flex align-items-center">
-                                <span class="text-secondary fa fa-circle mr-2"></span>
-                                Coding
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
             <div class="col-md-11 m-auto app-content">
                 <div class="app-content-overlay"></div>
                 <div class="app-action">
                     <div class="action-left">
                         <ul class="list-inline">
                             <li class="list-inline-item mb-0">
+                                <% if (user.role === "manager" || user.role === "srDev") { %> 
                                 <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#newTaskModal">
                                     <i data-feather="plus" class="mr-2"></i>
                                     New Task
                                 </button>
+                                <% } %>
+                                
                             </li>
                             <li class="list-inline-item mb-0">
                                 <a href="#" class="btn btn-outline-light dropdown-toggle" data-toggle="dropdown">
@@ -135,11 +88,25 @@
                                 <div class="flex-grow-1 min-width-0">
                                     <div class="mb-1 d-flex align-items-center justify-content-between">
                                         <div class="app-list-title text-truncate"><%= task.title %></div>
+                                        <% console.log(task.creator== user._id) %> 
+                                        <% if (task.creator == user._id) { %>
+                                         <div class="app-list-title text-muted text-truncate">creator</div>
+                                        <% } %>
                                         <div class="pl-3 d-flex align-items-center">
-                                            <div class="mr-3 d-sm-inline d-none">
+                                            <span class="text-muted mr-1">assign to: </span>
+                                            <% for( user of task.users ) { %>
+                                                <div class="d-sm-inline">
+                                                    
+                                                    <figure class="avatar avatar-sm" title="<%= user.name.firstname %> <%= user.name.lastname %>" data-toggle="tooltip">
+                                                        <input type="hidden" name='users' value="">
+                                                        <img src="/uploads/avatars/<%= user.avatar %> " class="rounded-circle" alt=" ">
+                                                    </figure>
+                                                </div>
+                                                <% } %>
+                                            <div class="ml-3 mr-3 d-sm-inline ">
                                                 <div class="badge badge-danger">End: <%= task.deadLine.toString().split(":00 GMT")[0] %></div>
                                             </div>
-                                            <div class="mr-3 d-sm-inline d-none">
+                                            <div class="mr-3 d-sm-inline ">
                                                 <div>
                                                     <span class="btn btn-info">
                                                         <%= task.status %>
@@ -167,8 +134,8 @@
 <!-- end::main -->
 
 <!-- new task add modal -->
-
-<div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
+ <!-- set allowed user roles -->
+ <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -254,6 +221,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
 
@@ -347,20 +315,40 @@ function taskDetails(title, status, description, files){
             </div>
             <hr class="m-0">
             <div class="card-body">
-                <h6 class="mb-3 font-size-11 text-uppercase">Comment</h6>
-                <div class="col-sm-4 mb-3">
-                <form>
-                    <div class="d-flex justify-content-between">
-                        <textarea name="" id="" class="mb-3" cols="40" rows="7"></textarea>
+                <div id="message-box" class="col-lg-12 chat-content">
+
+                    <div id="chat-body" class="message">
+                        <h3 style="padding: 10rem" class="blank-conversation text-center m-auto text-muted">no conversations</h3>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <input type="file">
-                        <button class="btn btn-primary">
-                            <i class="far fa-paper-plane mr-2"></i>
-                            Send
+                    <!-- end::messages -->
+
+                    <!-- begin::chat footer -->
+                    <div class="chat-footer border-top">
+                    <form class="d-flex" id="send-nessages" method="post" action="" enctype="multipart/form-data">
+                        <div class="flex-grow-1">
+                        <textarea
+                            name="message"
+                            type="text"
+                            class="form-control"
+                            placeholder="Write your message"
+                        ></textarea>
+                        </div>
+                        <div class="chat-footer-buttons d-flex">
+                       
+                        <lable
+                            class="btn btn-outline-light"
+                            for="attachment"
+                            title="Attach files"
+                        >
+                            <input type="file" multiple name="attachment" style="opacity: 1;" id="attachment" />
+                        </lable> 
+                        <button class="btn btn-primary m-2" type="submit">
+                            send
                         </button>
+                        </div>
+                    </form>
                     </div>
-                </form>
+                    <!-- end::chat footer -->
                 </div>
             </div>
         </div>
@@ -368,23 +356,42 @@ function taskDetails(title, status, description, files){
     taskInfo.innerHTML = html;
 }
 
+function usersMessages(avatar, message, name){
+    let html = `
+    <div class="message-item">
+        <figure class="avatar avatar-sm mr-1" title="${name.firstname} ${name.lastname}" data-toggle="tooltip">
+            <img src="/uploads/avatars/${avatar}" class="rounded-circle" alt="">
+        </figure>
+        <div class="message-item-content">
+            ${message}
+        </div>
+        <span class="time small text-muted font-italic">Yesterday</span>
+    </div>
+    `
+}
+
+// event listner on role select element
 userFind.addEventListener('change', () => {
     
     if(userFind.value){
         setTimeout(() => {
-            searchUserByTeam(userFind.value)
+            searchUsersByRole(userFind.value)
         }, 500);
     }
 })
 
-async function searchUserByTeam(value) {
+// call a user find api
+async function searchUsersByRole(value) {
     userList.innerText = '';
-    let respons = await fetch(`/tadmin/tasks/${value}`,
+
+    // send data in params
+    let respons = await fetch(`/api/search-role-user/${value}`,
     {
         method: 'POST',
     });
     let result = await respons.json();
     
+    // if any user found
     if(result.user.length > 0){
         result.user.forEach((u) => {
             userList.insertAdjacentHTML(
@@ -395,6 +402,7 @@ async function searchUserByTeam(value) {
     }
 }
 
+// task form data
 taskAddForm.onsubmit = async (event) => {
   try {
     event.preventDefault();

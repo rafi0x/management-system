@@ -8,7 +8,7 @@ const addTaskValidator = [
     .trim()
     .escape(),
   body("description")
-    .isLength({ min: 10, max: 350 })
+    .isLength({ min: 10 })
     .withMessage("Write description")
     .trim()
     .escape(),

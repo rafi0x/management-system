@@ -16,20 +16,15 @@ const {
 } = require("../middlewares/common/checker");
 const locals = require("../middlewares/common/locals");
 
-router.route("/profile/:id").get(locals(), adminAccess, getUserProfile);
+router.use([locals("Complete Profile"), adminAccess]);
+
+router.route("/id/:id").get(locals(), getUserProfile);
 
 router
   .route("/complete-profile")
-  .get(
-    locals("Complete Profile"),
-    adminAccess,
-    accessProfileCheck,
-    getCompleteProfile
-  )
+  .get(getCompleteProfile)
   .post(
-    locals("Complete Profile"),
     imgUpload("avatars").single("avatar"),
-    adminAccess,
     accessProfileCheck,
     profileValidator,
     postCompleteProfile

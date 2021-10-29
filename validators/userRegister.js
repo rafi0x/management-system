@@ -32,7 +32,7 @@ validator.userAddValidator = [
       }
     })
     .trim(),
-  body("roule").custom((roule) => {
+  body("role").custom((roule) => {
     const defaultRoule = ["admin", "manager", "srDev", "jrDev", "designer"];
     if (defaultRoule.indexOf(roule) === -1) {
       return Promise.reject("Assaign a roule");

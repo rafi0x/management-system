@@ -122,7 +122,6 @@ controller.sendMessages = async (req, res, next) => {
     next(500);
   }
 };
-
 // get all previous messages
 controller.getAllMessages = async (req, res, next) => {
   const messages = await Messages.find({ conversation_id: req.params.id });

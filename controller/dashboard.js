@@ -12,8 +12,4 @@ controller.getSettings = (req, res, next) => {
   res.render("pages/settings");
 };
 
-controller.getMeetings = (req, res, next) => {
-  res.render("pages/blank");
-};
-
 module.exports = controller;

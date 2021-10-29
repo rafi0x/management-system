@@ -12,19 +12,7 @@
       href=""
     />
 
-    <!-- Plugin styles -->
-    <link
-      rel="stylesheet"
-      href="<%= process.env.CDN %>vendors/bundle.css"
-      type="text/css"
-    />
-
-    <!-- quill -->
-    <link
-      href="<%= process.env.CDN %>vendors/quill/quill.snow.css"
-      rel="stylesheet"
-      type="text/css"
-    />
+   
 
     <!-- Clockpicker -->
     <link
@@ -56,13 +44,73 @@
       href="<%= process.env.CDN %>assets/css/all.min.css"
       type="text/css"
     />
-
+ <!-- Plugin styles -->
+    <link
+      rel="stylesheet"
+      href="<%= process.env.CDN %>vendors/bundle.css"
+      type="text/css"
+    />
     <!-- App styles -->
     <link
       rel="stylesheet"
       href="<%= process.env.CDN %>assets/css/app.min.css"
       type="text/css"
     />
+    <style>
+      .message {
+        height: 25rem !important; 
+        border:1px solid #f0f0f0; 
+        overflow-x: auto; 
+        overflow-y: hidden; 
+        padding: 10px;
+        margin-bottom: 2rem;
+      }
+      .message-item {
+          margin-bottom: 20px;
+          padding-left: 10px;
+          display: -webkit-box;
+          display: -webkit-flex;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -webkit-align-items: center;
+          -moz-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          position: relative;
+      }
+      .message-item-content {
+          max-width: 75%;
+          background-color: #f0f0f0;
+          padding: 7px 15px;
+          line-height: 1.5rem;
+          -webkit-border-radius: 5px;
+          -moz-border-radius: 5px;
+          border-radius: 5px;
+          position: relative;
+          z-index: 2;
+      }
+      .message-item .time {
+          margin: 0 1rem;
+      }
+      .me {
+          -webkit-box-orient: horizontal;
+          -webkit-box-direction: reverse;
+          -webkit-flex-direction: row-reverse;
+          -moz-box-orient: horizontal;
+          -moz-box-direction: reverse;
+          -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+          margin-left: auto;
+          padding-left: 0;
+          padding-right: 10px;
+      }
+      .message-item.me .message-item-content {
+          background-color: #004deb;
+          color: rgba(255, 255, 255, 0.9);
+      }
+  </style>
   </head>
   <body class="stretch-layout sticky-navigation light-header">
 </html>

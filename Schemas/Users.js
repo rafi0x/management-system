@@ -33,7 +33,7 @@ const userSchema = new Schema({
     require: true,
     trim: true,
   },
-  roule: {
+  role: {
     type: String,
     require: true,
   },

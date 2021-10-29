@@ -2,30 +2,30 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+
 // internal dependencies
-const cdn = require("./routers/cdn"); // cdn
+const cdn = require("./api/controller/cdn"); // cdn
 const setMiddlewares = require("./middlewares/appMiddleware"); // app middleweares
 const setRouters = require("./routers"); // routers
 const errHandler = require("./middlewares/common/error"); // error handler
-
+const { Server } = require("socket.io");
 // main app
 const app = express();
-const server = require("http").createServer(app);
+const appServer = require("http").createServer(app);
 
 // socket.io
-const io = require("socket.io")(server);
-global.io = io;
+const io = new Server(appServer);
+global.io = io; //make the io global
 
 // set view engin
 app.set("view engine", "ejs");
 
-// uses
+// app middlewares and routers
 setMiddlewares(app);
 setRouters(app);
 
 // error handler
 app.use(errHandler());
-
 // db & servers connections
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -40,7 +40,7 @@ mongoose
       console.log(`CDN started on ${process.env.CDN_PORT}`);
     });
     // main web server
-    server.listen(process.env.APP_PORT, () => {
+    appServer.listen(process.env.APP_PORT, () => {
       console.log(`webServer started on ${process.env.APP_PORT}`);
     });
   })

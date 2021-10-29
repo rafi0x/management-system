@@ -20,43 +20,26 @@ const {
   userLogout,
   profileCheck,
   adminAccess,
+  roleCheck,
 } = require("../middlewares/common/checker");
-const commonMiddleware = [adminAccess, profileCheck];
 const locals = require("../middlewares/common/locals");
 const { imgUpload, multiUpload } = require("../middlewares/common/uploader");
 
+// common middleware
+router.use([adminAccess, profileCheck]);
+
 // index route of dahsboard
-router.route("/").get(locals("Dashboard"), commonMiddleware, getIndx);
+router.route("/").get(locals("Dashboard"), getIndx);
 
 // mail
-router.route("/mail").get(locals("Mail"), commonMiddleware, getMail);
-
-// meetings
-router
-  .route("/meetings")
-  .get(locals("Meetings"), commonMiddleware, getMeetings);
-
-// tasks
-
-// employees
-router
-  .route("/employees")
-  .get(locals("Employees"), commonMiddleware, getEmployees)
-  .post(
-    locals("Employess"),
-    commonMiddleware,
-    userAddValidator,
-    postNewAndUpdateUser
-  )
-  .put(locals("Employess"), commonMiddleware, putUpdateUser);
-router.get("/employees/delete/:id", commonMiddleware, deleteUser);
+router.route("/mail").get(locals("Mail"), getMail);
 
 // seetings
 router
   .route("/settings")
-  .get(locals("Settings"), commonMiddleware, getSettings)
-  .post(imgUpload("avatars").single("avatar"), commonMiddleware, postSettings);
+  .get(locals("Settings"), getSettings)
+  .post(imgUpload("avatars").single("avatar"), postSettings);
 
-router.route("/logout").get(commonMiddleware, userLogout);
+router.route("/logout").get(userLogout);
 
 module.exports = router;

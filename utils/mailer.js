@@ -30,7 +30,7 @@ mailer.passResetMailTemplate = (to, name, code) => {
     to,
     subject: "Reset Password",
     text: `Hi ${name},
-    \nYou make a resuest for reset your current password.
+    \nYou make a request for reset your current password.
     \nClick the link blow, and set your new password
     \n${process.env.DOMAIN}${code}
     \n\nGood day.`,
