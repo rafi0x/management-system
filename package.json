@@ -21,7 +21,7 @@
     "express-session": "^1.17.2",
     "express-useragent": "^1.0.15",
     "express-validator": "^6.12.1",
-    "mongoose": "^5.13.3",
+    "mongoose": "^5.13.10",
     "multer": "^1.4.2",
     "nodemailer": "^6.6.3",
     "socket.io": "^4.2.0",
