@@ -1,9 +1,5 @@
 // dependencies
-const {
-  randomTextGen,
-  encryptData,
-  decryptData,
-} = require("../../utils/utilites");
+const { randomTextGen, encryptData } = require("../../utils/utilites");
 const {
   mailTransporter,
   passResetMailTemplate,

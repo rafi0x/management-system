@@ -74,7 +74,7 @@
                      <div class="app-lists">
                         <ul class="list-group list-group-flush show-tasks">
                             <% for( task of tasks ) { %>
-                            <li class="list-group-item task-list" onclick="taskDetails('<%= task.title %>', '<%= task.status %>', '<%= task.description %>', '<%= task.attachments %>')">
+                            <li class="list-group-item task-list" onclick="taskDetails('#task-info', '<%= JSON.stringify(task) %>')">
                                 <div class="mr-3">
                                     <a href="#" class="app-sortable-handle">
                                         <i data-feather="move" class="width-15 height-15"></i>
@@ -88,7 +88,6 @@
                                 <div class="flex-grow-1 min-width-0">
                                     <div class="mb-1 d-flex align-items-center justify-content-between">
                                         <div class="app-list-title text-truncate"><%= task.title %></div>
-                                        <% console.log(task.creator== user._id) %> 
                                         <% if (task.creator == user._id) { %>
                                          <div class="app-list-title text-muted text-truncate">creator</div>
                                         <% } %>
@@ -224,11 +223,11 @@
 
 
 <script>
-
+let loggedInUserId = "<%= profile._id %>";
 let userFind = document.querySelector('.team-select');
 let userList = document.querySelector('.users-list');
 let avatarGroup = document.querySelector('.addedUser');
-let showTasks = document.querySelector*('.show-tasks');
+let showTasks = document.querySelector('.show-tasks');
 let taskAddForm = document.querySelector('#add-task-form');
 let taskInfo = document.querySelector('#task-info');
 
@@ -251,7 +250,6 @@ function users(id, name, avatar){
     return html
 }
 function userSelected(id,name, avatar){
-    console.log('working');
     let html = `
      <figure class="avatar avatar-sm" title="${name.firstname} ${name.lastname}" data-toggle="tooltip">
         
@@ -262,15 +260,15 @@ function userSelected(id,name, avatar){
     avatarGroup.insertAdjacentHTML("beforeend", html);
 }
 
-function taskDetails(title, status, description, files){
+function taskDetails(domId, data){
+    let jData = JSON.parse(data);
     let html = `
-    
         <div class="card-header">
             <div class="app-detail-action-left">
                 <a class="app-detail-close-button" href="#">
                     <i class="fas fa-arrow-left mr-3"></i>
                 </a>
-                <h5 class="mb-0">${title}</h5>
+                <h5 class="mb-0">${jData.title}</h5>
             </div>
             <div class="app-detail-action-right">
                 <div>
@@ -298,7 +296,7 @@ function taskDetails(title, status, description, files){
                     
                    
                 </div>
-                <p>${description}</p>
+                <p>${jData.description}</p>
             </div>
             <hr class="m-0">
             <div class="card-body">
@@ -308,7 +306,7 @@ function taskDetails(title, status, description, files){
                     <li class="small">
                         <a href="#">
                             <i class="fas fa-paperclip mr-1 width-15 height-15"></i>
-                            ${ files }
+                            ${ jData.files }
                         </a>
                     </li>
                 </ul>
@@ -318,11 +316,11 @@ function taskDetails(title, status, description, files){
                 <div id="message-box" class="col-lg-12 chat-content">
 
                     <div id="chat-body" class="message">
-                        <h3 style="padding: 10rem" class="blank-conversation text-center m-auto text-muted">no conversations</h3>
+                        
                     </div>
                     <!-- end::messages -->
 
-                    <!-- begin::chat footer -->
+                    <!-- begin::mesage form -->
                     <div class="chat-footer border-top">
                     <form class="d-flex" id="send-nessages" method="post" action="" enctype="multipart/form-data">
                         <div class="flex-grow-1">
@@ -353,22 +351,64 @@ function taskDetails(title, status, description, files){
             </div>
         </div>
     `
-    taskInfo.innerHTML = html;
+
+    fetch("/tadmin/tasks/get-discussions",{
+        method: "POST",
+        body: JSON.stringify({id: jData._id}),
+        headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+
+    document.querySelector(domId).innerHTML = html;
+    document.querySelector('.app-detail-close-button').onclick = () => document.querySelector(domId).innerHTML = '';
+
+    let form = document.querySelector('#send-nessages')
+    form.onsubmit = async (e) => {
+        try {
+            e.preventDefault();
+            let formData = new FormData(form);
+            formData.append("taskId", jData._id);
+            formData.append("creator", loggedInUserId);
+            form.reset();
+            await fetch('/api/new-comments',{
+                method: "POST",
+                body: formData
+            })
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+        // let html2 = `
+        // <div class="message-item">
+        //     <figure class="avatar avatar-sm mr-1" title="firstname lastname" data-toggle="tooltip">
+        //         <img src="/uploads/avatars/" class="rounded-circle" alt="">
+        //     </figure>
+        //     <div class="message-item-content">
+        //         message
+        //     </div>
+        //     <span class="time small text-muted font-italic">Yesterday</span>
+        // </div>`
+        // for(let i = 0; i < 10; i++) document.querySelector('.message').innerHTML += html2
+    
 }
 
-function usersMessages(avatar, message, name){
-    let html = `
-    <div class="message-item">
-        <figure class="avatar avatar-sm mr-1" title="${name.firstname} ${name.lastname}" data-toggle="tooltip">
-            <img src="/uploads/avatars/${avatar}" class="rounded-circle" alt="">
-        </figure>
-        <div class="message-item-content">
-            ${message}
-        </div>
-        <span class="time small text-muted font-italic">Yesterday</span>
-    </div>
-    `
-}
+// function usersMessages(avatar, message, name){
+//     let html = `
+//     <div class="message-item">
+//         <figure class="avatar avatar-sm mr-1" title="${name.firstname} ${name.lastname}" data-toggle="tooltip">
+//             <img src="/uploads/avatars/${avatar}" class="rounded-circle" alt="">
+//         </figure>
+//         <div class="message-item-content">
+//             ${message}
+//         </div>
+//         <span class="time small text-muted font-italic">Yesterday</span>
+//     </div>
+//     `
+// }
 
 // event listner on role select element
 userFind.addEventListener('change', () => {
@@ -380,7 +420,7 @@ userFind.addEventListener('change', () => {
     }
 })
 
-// call a user find api
+// call user find api
 async function searchUsersByRole(value) {
     userList.innerText = '';
 

@@ -20,6 +20,7 @@ const taskSchema = new Schema({
   },
   users: [{ type: Schema.Types.ObjectId, ref: "User" }],
   attachments: { type: Array, default: [] },
+  discussions: { type: Array, default: [] },
   deadline: {
     type: Date,
     require: true,

@@ -37,7 +37,6 @@ validator.userAddValidator = [
     if (defaultRoule.indexOf(roule) === -1) {
       return Promise.reject("Assaign a roule");
     } else {
-      //without else, it's not working
       return roule;
     }
   }),
@@ -46,7 +45,6 @@ validator.userAddValidator = [
     if (defaultStatus.indexOf(statsu) === -1) {
       return Promise.reject("set account status");
     } else {
-      //without else, it's not working
       return statsu;
     }
   }),

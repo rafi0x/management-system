@@ -1,12 +1,12 @@
 const { validationResult } = require("express-validator");
 const Tasks = require("../Schemas/Tasks");
+const Discussion = require("../Schemas/Discussion");
 
 const controller = {};
 
 // get all tasks form db and show them
 controller.getTask = async (req, res, next) => {
   try {
-    console.log(res.userAgent);
     const tasks = await Tasks.find({
       users: { $in: [req.user._id] },
     }).populate({
@@ -18,6 +18,7 @@ controller.getTask = async (req, res, next) => {
       return res.render("pages/tasks");
     }
     res.locals.tasks = [];
+
     return res.render("pages/tasks");
   } catch (err) {
     console.log(err);
@@ -49,6 +50,11 @@ controller.addNewTasks = async (req, res, next) => {
       next(err);
     }
   }
+};
+
+controller.getDiscussions = async (req, res, next) => {
+  const allDiscussions = await Discussion.find({ task_id: req.body.id });
+  console.log(allDiscussions);
 };
 
 module.exports = controller;

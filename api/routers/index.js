@@ -3,6 +3,7 @@ const router = require("express").Router();
 
 const { searchUserByRole, searchUserByName } = require("../controller/search");
 const { sendMessages } = require("../controller/sendMessage");
+const { comments } = require("../controller/comments");
 
 // moddlewares
 const {
@@ -23,6 +24,12 @@ router.route("/search-role-user/:role").post(searchUserByRole);
 router
   .route("/new-message/")
   .post(multiUpload("messages").array("attachment"), sendMessages);
+// end --->
+
+// <--- comments
+router
+  .route("/new-comments/")
+  .post(multiUpload("comments").array("attachment"), comments);
 // end --->
 
 module.exports = router;

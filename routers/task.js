@@ -1,7 +1,7 @@
 // dependences
 const router = require("express").Router();
 
-const { getTask, addNewTasks } = require("../controller/task");
+const { getTask, addNewTasks, getDiscussions } = require("../controller/task");
 
 // moddlewares
 const {
@@ -25,5 +25,7 @@ router
     validator,
     addNewTasks
   );
+
+router.route("/get-discussions").post(getDiscussions);
 
 module.exports = router;

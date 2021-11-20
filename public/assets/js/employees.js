@@ -71,17 +71,16 @@ editBtn.forEach((singleBtn) => {
         // response from serevr
         let result = await response.json();
         // if server send error
-        console.log(result.error);
+
         if (result.error) {
           // make red on blank submit
-          console.log("in if");
+
           editForm.querySelectorAll("select").forEach((i) => {
             i.classList.add("errorFild");
             // i.querySelector('option').textContent = result.error;
             i.previousElementSibling.innerHTML = result.error;
           });
         } else {
-          console.log("in else");
           // reload after 1s
           setTimeout(() => {
             location.reload();
