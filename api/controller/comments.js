@@ -19,7 +19,8 @@ controller.comments = async (req, res, next) => {
       message,
       attachment,
     });
-    await newMessage.save();
+    const saved = await newMessage.save();
+    if (!saved) return res.status(500).json({ err: "server error" });
     return res.status(200);
   } catch (error) {
     console.log(error);

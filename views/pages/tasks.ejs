@@ -260,7 +260,7 @@ function userSelected(id,name, avatar){
     avatarGroup.insertAdjacentHTML("beforeend", html);
 }
 
-function taskDetails(domId, data){
+async function taskDetails(domId, data){
     let jData = JSON.parse(data);
     let html = `
         <div class="card-header">
@@ -352,18 +352,32 @@ function taskDetails(domId, data){
         </div>
     `
 
-    fetch("/tadmin/tasks/get-discussions",{
+    document.querySelector(domId).innerHTML = html;
+    document.querySelector('.app-detail-close-button').onclick = () => document.querySelector(domId).innerHTML = '';
+
+    let discusstionsBox = document.querySelector('.message')
+    let getDiscussions = await fetch("/tadmin/tasks/get-discussions",{
         method: "POST",
         body: JSON.stringify({id: jData._id}),
         headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     })
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    let result = await getDiscussions.json()
+    if(result.err) discusstionsBox.innerHTML = `<h3 style="padding: 10rem" class="blank-conversation text-center m-auto text-muted">no conversations</h3>`
+    result.forEach((data) => {
+        discusstionsBox.innerHTML += `
+        <div class="message-item">
+            <figure class="avatar avatar-sm mr-1" title="${data.creator.name.firstname} ${data.creator.name.lastname}" data-toggle="tooltip">
+                <img src="/uploads/avatars/${data.creator.avatar}" class="rounded-circle" alt="">
+            </figure>
+            <div class="message-item-content">
+                ${data.message}
+            </div>
+            <span class="time small text-muted font-italic">Yesterday</span>
+        </div>`
+    })
 
-    document.querySelector(domId).innerHTML = html;
-    document.querySelector('.app-detail-close-button').onclick = () => document.querySelector(domId).innerHTML = '';
 
     let form = document.querySelector('#send-nessages')
     form.onsubmit = async (e) => {
@@ -372,11 +386,12 @@ function taskDetails(domId, data){
             let formData = new FormData(form);
             formData.append("taskId", jData._id);
             formData.append("creator", loggedInUserId);
-            form.reset();
-            await fetch('/api/new-comments',{
+            let response = await fetch('/api/new-comments',{
                 method: "POST",
                 body: formData
             })
+            let result = response.json()
+            if(result.err) location.reload();
         } catch (err) {
             console.log(err);
         }

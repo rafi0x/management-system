@@ -53,8 +53,12 @@ controller.addNewTasks = async (req, res, next) => {
 };
 
 controller.getDiscussions = async (req, res, next) => {
-  const allDiscussions = await Discussion.find({ task_id: req.body.id });
-  console.log(allDiscussions);
+  const allDiscussions = await Discussion.find({
+    task_id: req.body.id,
+  }).populate("creator", "name avatar");
+
+  if (!allDiscussions) return res.status(500).json({ err: "server error" });
+  return res.status(200).json(allDiscussions);
 };
 
 module.exports = controller;
