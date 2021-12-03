@@ -1,5 +1,5 @@
 const Discussion = require("../../Schemas/Discussion");
-const Task = require("../../Schemas/Tasks");
+const Profile = require("../../Schemas/Profile");
 
 const controller = {};
 
@@ -20,6 +20,10 @@ controller.comments = async (req, res, next) => {
       attachment,
     });
     const saved = await newMessage.save();
+    const creatorInfo = await Profile.findOne({ _id: creator }, "name avatar");
+
+    global.io.emit("new_comment", { newMessage, creatorInfo });
+
     if (!saved) return res.status(500).json({ err: "server error" });
     return res.status(200);
   } catch (error) {

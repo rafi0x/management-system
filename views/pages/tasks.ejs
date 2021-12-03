@@ -224,6 +224,7 @@
 
 <script>
 let loggedInUserId = "<%= profile._id %>";
+let socket = io.connect("<%= process.env.DOMAIN %>");
 let userFind = document.querySelector('.team-select');
 let userList = document.querySelector('.users-list');
 let avatarGroup = document.querySelector('.addedUser');
@@ -386,44 +387,36 @@ async function taskDetails(domId, data){
             let formData = new FormData(form);
             formData.append("taskId", jData._id);
             formData.append("creator", loggedInUserId);
+            form.reset();
             let response = await fetch('/api/new-comments',{
                 method: "POST",
                 body: formData
             })
-            let result = response.json()
-            if(result.err) location.reload();
+            let result = await response.json()
         } catch (err) {
             console.log(err);
         }
     }
 
-        // let html2 = `
-        // <div class="message-item">
-        //     <figure class="avatar avatar-sm mr-1" title="firstname lastname" data-toggle="tooltip">
-        //         <img src="/uploads/avatars/" class="rounded-circle" alt="">
-        //     </figure>
-        //     <div class="message-item-content">
-        //         message
-        //     </div>
-        //     <span class="time small text-muted font-italic">Yesterday</span>
-        // </div>`
-        // for(let i = 0; i < 10; i++) document.querySelector('.message').innerHTML += html2
+    socket.on('new_comment', (data) => {
+        let html = `
+        <div class="message-item">
+            <figure class="avatar avatar-sm mr-1" title="${data.creatorInfo.name.firstname} ${data.creatorInfo.name.lastname}" data-toggle="tooltip">
+                <img src="/uploads/avatars/${data.creatorInfo.avatar}" class="rounded-circle" alt="">
+            </figure>
+            <div class="message-item-content">
+                ${data.newMessage.message}
+            </div>
+            <span class="time small text-muted font-italic">Yesterday</span>
+        </div>`
+        discusstionsBox.insertAdjacentHTML(
+            "beforeend", html
+          );
+        discusstionsBox.scrollTop = discusstionsBox.scrollHeight;
+    })
+
     
 }
-
-// function usersMessages(avatar, message, name){
-//     let html = `
-//     <div class="message-item">
-//         <figure class="avatar avatar-sm mr-1" title="${name.firstname} ${name.lastname}" data-toggle="tooltip">
-//             <img src="/uploads/avatars/${avatar}" class="rounded-circle" alt="">
-//         </figure>
-//         <div class="message-item-content">
-//             ${message}
-//         </div>
-//         <span class="time small text-muted font-italic">Yesterday</span>
-//     </div>
-//     `
-// }
 
 // event listner on role select element
 userFind.addEventListener('change', () => {
@@ -491,8 +484,6 @@ taskAddForm.onsubmit = async (event) => {
       console.log(err);
   }
 }
-// $("#newTaskModal").on("hidden.bs.modal", function () {
-//         taskAddForm.reset();
-//       });
+
 </script>
 <%- include('../parsials/tasks/footer.ejs') %>
